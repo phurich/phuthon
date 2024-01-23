@@ -1,0 +1,109 @@
+body, text, textarea, .btn-lg, .tooltip-inner {
+    font-family: "Kanit", Sans-Serif !important;
+    font-size: x-large !important;
+}
+
+span {
+    font-size: large;
+}
+
+.stack {
+    max-width: 100%;
+    flex: auto;
+    padding-top: 5px;
+}
+
+input[type=radio], input[type=checkbox] {
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+}
+
+label {
+    padding-right: 10px;
+    font-size: x-large;
+    width: auto;
+}
+
+.row {
+    margin: 10px 0px 10px 0px;
+    padding-block: 10px;
+}
+
+input {
+    border-width: 1px;
+}
+
+.label-textarea {
+    display: flex;
+    align-items: flex-start;
+    align-items: baseline;
+    /*margin-bottom: 20px;*/
+}
+
+.form-check-inline {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: 0;
+    margin-right: .75rem;
+}
+
+.glyphicon {
+    font-size: x-large;
+}
+
+.form-control {
+    font-size: x-large;
+    height: 60px;
+    min-width: 20vw;
+}
+
+.btn-default {
+    background-color: #eee !important;
+    height: 60px;
+}
+
+.checkbox {
+    padding-left: 10px;
+}
+
+.justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-space {
+    margin-left: 30px;
+}
+
+.button-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    padding: 6px 12px;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}  

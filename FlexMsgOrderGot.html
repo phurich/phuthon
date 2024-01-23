@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>ภูธรเดลิเวอรี่</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img src="logo600px.png" class="mx-auto d-block" alt="ภูธรเดลิเวอรี่">
+    <form id="getOrder" action="https://script.google.com/macros/s/AKfycbwU4HFaNT3dEnV8eAhp4xk6rtMIqk8Gma2RBcUkuv92O6IvqTvq7TpkwPUuzjR6zEmdHw/exec" method="post">
+
+        <div class="form-group row">
+            <label for="purchase" class="col-5">💵ค่าจัดซื้อ</label>
+            <div class="col-7">
+                <input id="purchase" name="purchase" style="width: 100%" pattern="^\d[\d\.\+\-]*" placeholder="50+50 หรือ 100"
+                    type="text" aria-describedby="purchaseHelpBlock" required>
+                <span id="purchaseHelpBlock" class="form-text text-muted">📄
+                    ใบเสร็จส่งผ่านไลน์ได้ตามปกติ</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="delivery" class="col-5">🛵ค่าบริการ</label>
+            <div class="col-7">
+                <input id="delivery" name="delivery" style="width: 100%" pattern="^\d[\d\.\+\-]*" placeholder="40+20 หรือ 60"
+                    type="text" aria-describedby="deliveryHelpBlock" required>
+                <span id="deliveryHelpBlock" class="form-text text-muted">📸 ถ่ายภาพ +10฿ | 📦 ยกลัง +20฿ | 🐘
+                    ล้นกระเป๋า +20฿</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="discount" class="col-5">💰ส่วนลด</label>
+            <div class="col-7">
+                <input id="discount" name="discount" style="width: 100%" pattern="^\d[\d\.\+\-]*" placeholder="ระบุส่วนลด" type="text"
+                    aria-describedby="discountHelpBlock" value="0" required>
+                <span id="discountHelpBlock" class="form-text text-muted">💰 เพ็งซอย DIY -10฿ | ใบตองเบอเกอรี่ -10%</span>
+                <div class="form-check">
+                    <input id="paid" name="paid" class="form-check-input" type="checkbox" value="Y">
+                    <label class="form-check-label" style="padding-left: 15px;"for="paid">ร้านชำระค่าบริการแทนลูกค้า</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="tel" class="col-5">☎️เบอร์โทรผู้รับ</label>
+            <div class="col-7">
+                <input id="tel" name="tel" style="width: 100%" pattern="^\d{9,10}" placeholder="ระบุเบอร์โทรผู้รับ" type="text"
+                    value="" aria-describedby="telHelpBlock">
+                <span id="telHelpBlock" class="form-text text-muted">🤖 สามารถค้นหาเบอร์โทรนี้ผ่าน 'ภูธรไรเดอร์'
+                    ได้</span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button name="submit" type="submit" class="btn btn-primary btn-lg">📤ส่งข้อมูล</button>
+        </div>
+        <input type="hidden" id="rider" name="rider" value="">
+        <input type="hidden" id="row" name="row" value="">
+    </form>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                let queryString = decodeURIComponent(window.location.search);
+                queryString = queryString.replace("?liff.state=", "");
+                const params = new Proxy(new URLSearchParams(queryString), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+                document.getElementById("rider").value = params.rider;
+                document.getElementById("row").value = params.row;
+                document.getElementById("tel").value = params.tel;
+                //alert(queryString+"|"+params.rider +"|"+params.row+"|"+params.tel)
+                window.stop();
+            }
+        };
+    </script>
+</body>
+
+</html>

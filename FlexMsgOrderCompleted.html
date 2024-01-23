@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>ภูธรเดลิเวอรี่</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img src="logo600px.png" class="mx-auto d-block" alt="ภูธรเดลิเวอรี่">
+    <form id="completeOrder" name="completeOrder" action="https://script.google.com/macros/s/AKfycbwU4HFaNT3dEnV8eAhp4xk6rtMIqk8Gma2RBcUkuv92O6IvqTvq7TpkwPUuzjR6zEmdHw/exec" method="post">
+        <div class="form-group row">
+            <label class="col-4">💵วิธีชำระเงิน</label>
+            <div>
+                <div>
+                    <input name="payment" id="payment_0" type="radio" onchange="document.getElementById('transferBlock').style.display= 'none';" value="เงินสดเต็มจำนวน" required="required">
+                    <label for="payment_0">เงินสด</label>
+                </div>
+                <div>
+                    <input name="payment" id="payment_1" type="radio" onchange="document.getElementById('transferBlock').style.display= 'none';" value="โอนเต็มจำนวน">
+                    <label for="payment_1">โอน</label>
+                </div>
+                <div>
+                    <input name="payment" id="payment_2" type="radio" onchange="document.getElementById('transferBlock').style.display= 'flex';document.getElementById('transfer').value = ''; document.getElementById('transfer').focus();" value="เงินสดและโอน">
+                    <label for="payment_2">เงินสดและโอน</label>
+                </div>
+            </div>
+        </div>
+        <div id="transferBlock" class="form-group row" style="display: none;">
+            <label for="transfer" class="col-4">💰ระบุยอดโอน</label>
+            <div class="col-8">
+                <input id="transfer" name="transfer" style="width: 100%" type="text" pattern="^\d[\d\.\+\-]*" value="0" required="required" aria-describedby="transferHelpBlock">
+                <span id="transferHelpBlock" class="form-text text-muted">ระบุยอดที่ลูกค้าต้องโอน</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="location" class="col-4">🎯พิกัดจัดส่ง</label>
+            <div class="col-8">
+                <input id="location" name="location" style="width: 100%" type="text" required="required" aria-describedby="locationHelpBlock" readonly>
+                <span id="locationHelpBlock" class="form-text text-muted">📡 เปิดฟังก์ชั่น GPS เพื่อพิกัดที่แม่นยำ
+                    🛰️</span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-info btn-lg" onclick="getLocation();">ขอค่าพิกัดใหม่</button>
+            <button name="submit" type="submit" class="btn btn-primary btn-lg btn-space">📤ส่งข้อมูล</button>
+        </div>
+        <input type="hidden" id="rider" name="rider" value="">
+        <input type="hidden" id="row" name="row" value="">
+        <input type="hidden" id="tel" name="tel" value="">
+    </form>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                let queryString = decodeURIComponent(window.location.search);
+                queryString = queryString.replace("?liff.state=", "");
+
+                const params = new Proxy(new URLSearchParams(queryString), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+
+                document.getElementById("rider").value = params.rider;
+                document.getElementById("row").value = params.row;
+                document.getElementById("tel").value = params.tel;
+                getLocation();
+            }
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, getLocationError, { timeout: 4000, enableHighAccuracy: true });
+            } else {
+                getLocationError();
+            }
+        }
+
+        function getLocationError() {
+            document.getElementById("location").value = "กรุณาเปิดฟังก์ชั่น GPS";
+        }
+
+        function showPosition(position) {
+            if (document.getElementById("location").value === position.coords.latitude + "," + position.coords.longitude) {
+                document.getElementById('locationHelpBlock').innerText = "🎯 ยืนยันค่าพิกัดเดิม";
+            } else {
+                document.getElementById("location").value = position.coords.latitude + "," + position.coords.longitude;
+                document.getElementById('locationHelpBlock').innerText = "📡 เปิดฟังก์ชั่น GPS เพื่อพิกัดที่แม่นยำ 🛰️";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
