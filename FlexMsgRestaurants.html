@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>ข้อมูลร้าน</title>
+    <meta charset="UTF-8" content-type="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            font-size: xx-large;
+        }
+
+        img {
+            max-width: 95%;
+            height: auto;
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            border-collapse: collapse;
+            max-width: 95%;
+            margin: 0 auto;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .row:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .cell {
+            flex: 1;
+        }
+
+        .cellTwice {
+            flex: 2;
+        }
+
+        .header {
+            font-size: xx-large;
+            font-weight: bold;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Add styles for the text box and buttons */
+        #searchTerm,
+        button {
+            font-size: xx-large;
+            font-family: 'Kanit', sans-serif;
+            border-radius: 10px;
+            /* Add rounded corners */
+        }
+
+        input {
+            width: 40%;
+        }
+
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+            }
+
+            .cellTwice,
+            .cell {
+                flex-basis: 100%;
+                text-align: center;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <img style="display: block; margin-left: auto; margin-right: auto;" src="logo600px.png" alt="ภูธรเดลิเวอรี่">
+    <p style="text-align: center;font-size: xxx-large;font-weight: bold;margin: auto;">ข้อมูลร้าน</p>
+    <!-- Add a text box and search button for the "find in page" feature -->
+    <div style="text-align:center;padding: 20px;">
+        <input type="text" id="searchTerm" placeholder="ระบุคำค้นหา...">
+        <button onclick="findInPage()">ค้นหา🧐</button>
+        <!-- Add floating "Previous" and "Next" buttons -->
+    </div>
+    <div style="position: fixed; bottom: 30px; left: 10px;">
+        <button onclick="topFunction()">⏫</button>
+        <button onclick="previousMatch()">⏪</button>
+        <button onclick="nextMatch()">⏩</button>
+    </div>
+    <div class="table">
+        <div class="row">
+            <div class="cellTwice header">
+                ชื่อร้าน </div>
+
+            <div class="cellTwice header">
+                โทรศัพท์ </div>
+
+            <div class="cell header">
+                พิกัด </div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">159 home café โฮมคาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0936393990">0936393990</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFX6%2B73">7P95FFX6+73</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">กระเพราถาดอินดี้ @ หนองคู</div>
+            <div class="cellTwice"><a href="tel:0924403199">0924403199</a>,<a href="tel:0812634814">0812634814</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2BG3">7P95FFG3+G3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยจั๊บรสเด็ด</div>
+            <div class="cellTwice"><a href="tel:0878612031">0878612031</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCG%2BQVJ">7P95FFCG+QVJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยจั๊บอุบล</div>
+            <div class="cellTwice"><a href="tel:0996240701">0996240701</a>,<a href="tel:042721395">042721395</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B799">7P95FFF5+799</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยจั๊บอุบล (ข้าง ธ.ออมสิน)</div>
+            <div class="cellTwice"><a href="tel:0933947211">0933947211</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BQ2H">7P95FFF6+Q2H</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวไก่มะระ (ข้างปั๊มสหกรณ์บางจาก)</div>
+            <div class="cellTwice"><a href="tel:0985472089">0985472089</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BW9H">7P95FFF6+W9H</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเจ้าเก่า</div>
+            <div class="cellTwice"><a href="tel:0810510468">0810510468</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BFG">7P95FFF4+FG</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวต้มยำ ข้าง ปตท.</div>
+            <div class="cellTwice"><a href="tel:0818719655">0818719655</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BHGJ">7P95FFF9+HGJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเนื้อองค์ข่า</div>
+            <div class="cellTwice"><a href="tel:0826628400">0826628400</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH6%2BRXH">7P95FFH6+RXH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวบ้านอ้อม</div>
+            <div class="cellTwice"><a href="tel:0632659169">0632659169</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2BM9">7P95FFF8+M9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเพลิงสว่าง</div>
+            <div class="cellTwice"><a href="tel:0632706022">0632706022</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF52%2BX4R">7P95FF52+X4R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเมียหลวง</div>
+            <div class="cellTwice"><a href="tel:0868538401">0868538401</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH9%2BC9X">7P95FFH9+C9X</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเมียหลวง @ บขส.</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BFJR">7P95FFF4+FJR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวยายหวัง</div>
+            <div class="cellTwice"><a href="tel:0611418158">0611418158</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2B6VC">7P95FFF8+6VC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเรือคุณก้อง</div>
+            <div class="cellTwice"><a href="tel:0610429097">0610429097</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B7CW">7P95FFF6+7CW</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเรือชามไม้</div>
+            <div class="cellTwice"><a href="tel:0637136789">0637136789</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B56">7P95FFFF+56</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวเรือ ป.ประทีป @ หนองคู</div>
+            <div class="cellTwice"><a href="tel:0819198022">0819198022</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG2%2BJ7">7P95FFG2+J7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวสหภัณฑ์</div>
+            <div class="cellTwice"><a href="tel:0878238563">0878238563</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BRPM">7P95FFF4+RPM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ก๋วยเตี๋ยวหมูตุ๋น อาหารตามสั่ง</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFMC%2B8WP">7P95FFMC+8WP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">กะเพราไข่ข้น</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC6%2BP94">7P95FFC6+P94</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">กาแฟน้องไดร์ร่าจังคุง</div>
+            <div class="cellTwice"><a href="tel:0838521670">0838521670</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJH%2BF4C">7P95FFJH+F4C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">กาแฟบ้านบ่า</div>
+            <div class="cellTwice"><a href="tel:0997613291">0997613291</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG6%2B3VM">7P95FFG6+3VM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">การบ้าน</div>
+            <div class="cellTwice"><a href="tel:0951685758">0951685758</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B79V">7P95FFF5+79V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">กูกะเพราแท้ บาย เชฟจั๊ม</div>
+            <div class="cellTwice"><a href="tel:0832290949">0832290949</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BHR2">7P95FFF5+HR2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แกงเขียวหวาน</div>
+            <div class="cellTwice"><a href="tel:0869818222">0869818222</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B6X">7P95FFF5+6X</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แกงเส้นจุ๊มุ</div>
+            <div class="cellTwice"><a href="tel:0611944742">0611944742</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B9F4">7P95FFG3+9F4</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โกมินธา</div>
+            <div class="cellTwice"><a href="tel:0946768051">0946768051</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B8F2">7P95FFF6+8F2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไก่หมุนต้นโพธิ์</div>
+            <div class="cellTwice"><a href="tel:0821032903">0821032903</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCFX%2BJFQ">7P95FCFX+JFQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ขนมจีนเส้นสด</div>
+            <div class="cellTwice"><a href="tel:0951850598">0951850598</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BGRQ">7P95FFF5+GRQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ขนมหวานป้าเพียร โต้รุ่ง</div>
+            <div class="cellTwice"><a href="tel:0894220130">0894220130</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BQJ">7P95FFF3+QJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ขยี้ไข่</div>
+            <div class="cellTwice"><a href="tel:0903452202">0903452202</a>,<a href="tel:0957283387">0957283387</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2BM5">7P95FFG3+M5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวแกงต้นโพธิ์</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCFX%2BJFQ">7P95FCFX+JFQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวแกงอร่อยดี</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BP9V">7P95FFF3+P9V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวขาหมูศรีนุกูล</div>
+            <div class="cellTwice"><a href="tel:0632614976">0632614976</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BG2G">7P95FFF9+G2G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวต้มกุ๊ยคอแห้ง</div>
+            <div class="cellTwice"><a href="tel:0930864478">0930864478</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BGV3">7P95FFF5+GV3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวต้มโคคึก</div>
+            <div class="cellTwice"><a href="tel:0621710561">0621710561</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCG%2BGW7">7P95FFCG+GW7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวปลาแกะ</div>
+            <div class="cellTwice"><a href="tel:0939745187">0939745187</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FG83%2BX7F">7P95FG83+X7F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวมันไก่คุณพุก</div>
+            <div class="cellTwice"><a href="tel:0655746881">0655746881</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BW8J">7P95FFF3+W8J</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวมันไก่ไหหลำ (อุดมมาร์เก็ต)</div>
+            <div class="cellTwice"><a href="tel:0980950799">0980950799</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B8G8">7P95FFF6+8G8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวมันไก่องค์ดำ</div>
+            <div class="cellTwice"><a href="tel:0845145246">0845145246</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BXW6">7P95FFF6+XW6</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ข้าวแลง</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCX%2B8G2">7P95FCCX+8G2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ขาหมูคุณติ๊ก</div>
+            <div class="cellTwice"><a href="tel:0850063353">0850063353</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BXC7">7P95FFF3+XC7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เข้มข้นมะพร้าวปั่นนมสด</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FC8P%2BCGM">7P95FC8P+CGM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไข่ข้นคนจร</div>
+            <div class="cellTwice"><a href="tel:0802604670">0802604670</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCH%2BP94">7P95FFCH+P94</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวขนุน ก๋วยเตี๋ยวไก่มะระ</div>
+            <div class="cellTwice"><a href="tel:0936707114">0936707114</a>,<a href="tel:0612634399">0612634399</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG9%2BM7">7P95FFG9+M7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวข้าวต้ม ผอ. (ครัว ผอ.)</div>
+            <div class="cellTwice"><a href="tel:0982455269">0982455269</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B65">7P95FFF6+65</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวคุณยะ</div>
+            <div class="cellTwice"><a href="tel:0848417164">0848417164</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH6%2B7QR">7P95FFH6+7QR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวคุณโรส</div>
+            <div class="cellTwice"><a href="tel:0980365703">0980365703</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFQ3%2B6G3">7P95FFQ3+6G3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวเจ้บีก๋วยเตี๋ยวไก่มะระ</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFV4%2B24V">7P95FFV4+24V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวชิวชิว แอด หนองคู</div>
+            <div class="cellTwice"><a href="tel:0650473569">0650473569</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG2%2BG6Q">7P95FFG2+G6Q</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวตาอึ่ง</div>
+            <div class="cellTwice"><a href="tel:0877236591">0877236591</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF98%2BVF">7P95FF98+VF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวเต็มคำ 285</div>
+            <div class="cellTwice"><a href="tel:0996240701">0996240701</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC5%2B2V9">7P95FFC5+2V9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวแม่ยิ้ม</div>
+            <div class="cellTwice"><a href="tel:0979696698">0979696698</a>,<a href="tel:0942646661">0942646661</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FC9Q%2BW2">7P95FC9Q+W2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวแม่สุนทร</div>
+            <div class="cellTwice"><a href="tel:0833604625">0833604625</a>,<a href="tel:0833494819">0833494819</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCH%2BP4G">7P95FFCH+P4G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครัวโมแอนดา</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG8%2BMVF">7P95FFG8+MVF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ครูเปิ้ลคาเฟ่เบอร์เกอร์</div>
+            <div class="cellTwice"><a href="tel:0936031583">0936031583</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFR3%2BWH">7P95FFR3+WH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">คอฟฟี่อะเดย์</div>
+            <div class="cellTwice"><a href="tel:0953515614">0953515614</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BM78">7P95FFF2+M78</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">คอร์นด็อก แอนด์ คิมบับ</div>
+            <div class="cellTwice"><a href="tel:0619769779">0619769779</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG7%2BC9C">7P95FFG7+C9C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">คันเซย์ซูชิ</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B4QR">7P95FCCQ+4QR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เคเจ ชาไข่มุก</div>
+            <div class="cellTwice"><a href="tel:0872339819">0872339819</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B298">7P95FFG3+298</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เครปลูกตาล เครปบอย</div>
+            <div class="cellTwice"><a href="tel:0918673324">0918673324</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2B9F">7P95FFF9+9F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เครปไส้แตก</div>
+            <div class="cellTwice"><a href="tel:0956672551">0956672551</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2BFQ">7P95FFCC+FQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เคอรี่ kerry</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BQ2V">7P95FFF6+Q2V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โคขุนคุณเอก</div>
+            <div class="cellTwice"><a href="tel:0638864554">0638864554</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCGX%2BR9">7P95FCGX+R9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โคสเปซ</div>
+            <div class="cellTwice"><a href="tel:0806287951">0806287951</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B58">7P95FFF6+58</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">จงเจริญพาณิชย์</div>
+            <div class="cellTwice"><a href="tel:0878306262">0878306262</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B9C">7P95FFF4+9C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">จ่าอ๋อยลาบเป็ด</div>
+            <div class="cellTwice"><a href="tel:0810587387">0810587387</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG6%2B53">7P95FFG6+53</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ๊แตนเนื้อสด</div>
+            <div class="cellTwice"><a href="tel:0610563645">0610563645</a>,<a href="tel:0985544624">0985544624</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFQ3%2B3CW">7P95FFQ3+3CW</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ ทาวน์ คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0854442171">0854442171</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCGX%2BMWQ">7P95FCGX+MWQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ๊ทินตามสั่ง บขส.</div>
+            <div class="cellTwice"><a href="tel:0849529390">0849529390</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B9QF">7P95FFF4+9QF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ๊แนนน้ำปั่น (ศูนย์อาหารโอโห้ 20)</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BJ5V">7P95FFF9+J5V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจฟแอนด์จอยไข่เจียวทรงเครื่อง</div>
+            <div class="cellTwice"><a href="tel:0854590091">0854590091</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BQM2">7P95FFF3+QM2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ๊หมวย อาหารตามสั่ง</div>
+            <div class="cellTwice"><a href="tel:0621716265">0621716265</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BP7R">7P95FFF2+P7R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เจ้าจอมหมูกระทะ</div>
+            <div class="cellTwice"><a href="tel:0878305206">0878305206</a>,<a href="tel:0898439843">0898439843</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFP3%2B4VJ">7P95FFP3+4VJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แจ่วฮ้อนบ้านรื่นรมย์</div>
+            <div class="cellTwice"><a href="tel:0824599878">0824599878</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B4C7">7P95FFFF+4C7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โจ๊กนายฮุย</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B6R">7P95FFF4+6R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โจ๊กป้าจอน</div>
+            <div class="cellTwice"><a href="tel:0807437944">0807437944</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJ8%2BPJJ">7P95FFJ8+PJJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชงชา</div>
+            <div class="cellTwice"><a href="tel:0623501499">0623501499</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B68V">7P95FFF5+68V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ช. โภชนา</div>
+            <div class="cellTwice"><a href="tel:0908232114">0908232114</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFC%2B7PW">7P95FFFC+7PW</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชลธิชาตามสั่ง</div>
+            <div class="cellTwice"><a href="tel:0847305233">0847305233</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJ3%2BHR7">7P95FFJ3+HR7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชาตันหยง</div>
+            <div class="cellTwice"><a href="tel:0629179192">0629179192</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BM3">7P95FFF9+M3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชานมเหนียว ป่ะล่ะ</div>
+            <div class="cellTwice"><a href="tel:0981822868">0981822868</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF94%2BP6R">7P95FF94+P6R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชาพะยอม บาย ศิริ</div>
+            <div class="cellTwice"><a href="tel:0936371420">0936371420</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B5GC">7P95FFF4+5GC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชาพะยอมสาขา 1</div>
+            <div class="cellTwice"><a href="tel:0878565646">0878565646</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BPX5">7P95FFF2+PX5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชาพะยอม (สี่แยกโลตัสเอ็กซ์เพรส)</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B5FH">7P95FFF4+5FH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชายสี่บะหมี่เกี๊ยว (หน้าวัดสว่างภูมิดล)</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2BW2G">7P95FFF8+W2G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชาว คาเฟ่</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B676">7P95FFF6+676</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชิ้นปิ้งไม่ไหม้</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF8G%2BMHP">7P95FF8G+MHP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ชูการ์ โค้ท</div>
+            <div class="cellTwice"><a href="tel:0640654296">0640654296</a>,<a href="tel:0868535578">0868535578</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BJCX">7P95FFF3+JCX</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ซัน ซัน มะพร้าวน้ำหอมสดปั่น</div>
+            <div class="cellTwice"><a href="tel:0854577336">0854577336</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B5PM">7P95FFF6+5PM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ซางวาซูชิ</div>
+            <div class="cellTwice"><a href="tel:0612276439">0612276439</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFC%2B7MQ">7P95FFFC+7MQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ซีเจริญแพคเกจจิ้ง</div>
+            <div class="cellTwice"><a href="tel:0942622294">0942622294</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B3FF">7P95FFG3+3FF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แซ่บแจ่วฮ้อน</div>
+            <div class="cellTwice"><a href="tel:0972959508">0972959508</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFM4%2B9GR">7P95FFM4+9GR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ณ ชวนธนปัญญา</div>
+            <div class="cellTwice"><a href="tel:0842049191">0842049191</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF64%2B2C7">7P95FF64+2C7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ดัสตี้ รัสตี้ Dusty Rusty</div>
+            <div class="cellTwice"><a href="tel:0939292265">0939292265</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2BQR">7P95FFF8+QR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เดลี่โดนัท</div>
+            <div class="cellTwice"><a href="tel:0621780521">0621780521</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B56">7P95FFFF+56</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เดอะดุ๊ก หมูสะเต๊ะในตำนาน</div>
+            <div class="cellTwice"><a href="tel:0980827408">0980827408</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCGM%2BQR">7P95FCGM+QR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เดอะ บล็อค</div>
+            <div class="cellTwice"><a href="tel:0988458540">0988458540</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BMJ">7P95FFF6+MJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เดอะ พิซซ่า คอมปะนี</div>
+            <div class="cellTwice"><a href="tel:0610287444">0610287444</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BRPV">7P95FFF4+RPV</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แดรี่ควีน</div>
+            <div class="cellTwice"><a href="tel:0956614612">0956614612</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B6Q">7P95FCCQ+6Q</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไดโน พิซซ่า เครป</div>
+            <div class="cellTwice"><a href="tel:0909590632">0909590632</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC4%2BWC3">7P95FFC4+WC3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ต้นเค้ก</div>
+            <div class="cellTwice"><a href="tel:0806805408">0806805408</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2BX8">7P95FFCC+X8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ตำยำยั่ว</div>
+            <div class="cellTwice"><a href="tel:0956639260">0956639260</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF94%2BM67">7P95FF94+M67</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เตี๋ยวข้างเตรียม บาย เปรี้ยวปาก</div>
+            <div class="cellTwice"><a href="tel:0818593755">0818593755</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2BFRJ">7P95FFCC+FRJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โต้รุ่งทะเลสด</div>
+            <div class="cellTwice"><a href="tel:0985456599">0985456599</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B9F4">7P95FFG3+9F4</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ท.คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0842826619">0842826619</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B67R">7P95FFF6+67R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ทรีเดย์คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0982277115">0982277115</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B4G">7P95FFFF+4G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ที่นี่นมเหนียว & ปังปิ้ง</div>
+            <div class="cellTwice"><a href="tel:0853182791">0853182791</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B499">7P95FFG3+499</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เทวาไก่ทอด</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FC8Q%2BWC8">7P95FC8Q+WC8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ธเนศสโตร์</div>
+            <div class="cellTwice"><a href="tel:042721294">042721294</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BPR">7P95FFF2+PR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">นัว หมูกระทะ ทะเลสด</div>
+            <div class="cellTwice"><a href="tel:0999605078">0999605078</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF7%2BX89">7P95FFF7+X89</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">นานาคอฟฟี่</div>
+            <div class="cellTwice"><a href="tel:042722394">042722394</a>,<a href="tel:0816618014">0816618014</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BJP">7P95FFF2+JP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">นิยมนมสด</div>
+            <div class="cellTwice"><a href="tel:0803391652">0803391652</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BRM8">7P95FFF6+RM8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เนื้อย่าง-หมูกระทะ ตู้แหล่ หนองทุ่ม</div>
+            <div class="cellTwice"><a href="tel:0862285879">0862285879</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95CF9H%2B28F">7P95CF9H+28F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แนนนี่คอฟฟี่</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BM58">7P95FFF9+M58</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">บลูคาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0833457301">0833457301</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCF%2BMW2">7P95FFCF+MW2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">บักหำตำยำนัว</div>
+            <div class="cellTwice"><a href="tel:0983746929">0983746929</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFMC%2B7WM">7P95FFMC+7WM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">บันนี่เครปญี่ปุ่น </div>
+            <div class="cellTwice"><a href="tel:0835536245">0835536245</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B6W3">7P95FFF5+6W3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">บ้านขนมลูกครูม้า ครูลูกม้า</div>
+            <div class="cellTwice"><a href="tel:0956509659">0956509659</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCJX%2BJX5">7P95FCJX+JX5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">บ้าบิ่นมะพร้าวอ่อน โลตัส</div>
+            <div class="cellTwice"><a href="tel:0801863367">0801863367</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B7PJ">7P95FCCQ+7PJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ใบตองเบเกอรี่</div>
+            <div class="cellTwice"><a href="tel:0640654296">0640654296</a>,<a href="tel:0973046789">0973046789</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BJV">7P95FFF2+JV</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ปลาปิก้า</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B825">7P95FFF5+825</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ปอเปี๊ยะ กิ๊กนาวา</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF92%2B4CH">7P95FF92+4CH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ปอเปี๊ยะยิ่งเจริญ</div>
+            <div class="cellTwice"><a href="tel:0868535578">0868535578</a>,<a href="tel:0891901548">0891901548</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BHWJ">7P95FFF3+HWJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ปากหม้อออมสิน</div>
+            <div class="cellTwice"><a href="tel:0917043212">0917043212</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BVR8">7P95FFF5+VR8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แป๋วน้ำปั่น</div>
+            <div class="cellTwice"><a href="tel:0637369494">0637369494</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B736">7P95FFF5+736</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ผลไม้ปั่นเกาลูน เจ้าเก่า</div>
+            <div class="cellTwice"><a href="tel:0623658183">0623658183</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B6VH">7P95FFF5+6VH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ผัดไทยใจดี</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BV9F">7P95FFF3+V9F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ผัดไทยป้าผ่อง ครัวป้าผ่อง ครัวน้าผ่อง</div>
+            <div class="cellTwice"><a href="tel:0899406669">0899406669</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH2%2BH6F">7P95FFH2+H6F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ผู้ชายขายหอย</div>
+            <div class="cellTwice"><a href="tel:0828539558">0828539558</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF7P%2BHPF">7P95FF7P+HPF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">พริกกะเกลือ</div>
+            <div class="cellTwice"><a href="tel:0814308966">0814308966</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B7J3">7P95FCCQ+7J3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">พรินซ์ บาริสต้า คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0652365556">0652365556</a>,<a href="tel:0641596364">0641596364</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BCC">7P95FFF6+CC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">พอดีคำ เจริญศิลป์</div>
+            <div class="cellTwice"><a href="tel:0933239551">0933239551</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95HGJR%2BH5">7P95HGJR+H5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">พิซซ่าอร่อยดี</div>
+            <div class="cellTwice"><a href="tel:0645758711">0645758711</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B872">7P95FFF5+872</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เพ็งบ้านหวาย</div>
+            <div class="cellTwice"><a href="tel:0845158429">0845158429</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFP8%2BJC4">7P95FFP8+JC4</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เพ็งพี่ป้อม</div>
+            <div class="cellTwice"><a href="tel:0656299896">0656299896</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG8%2B7G3">7P95FFG8+7G3</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เฟิร์ส เดย์ คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0982783646">0982783646</a>,<a href="tel:0654151786">0654151786</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2B9J">7P95FFCC+9J</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">โฟกัสโคโคนัท</div>
+            <div class="cellTwice"><a href="tel:0653951789">0653951789</a>,<a href="tel:0822396241">0822396241</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B7P9">7P95FFF5+7P9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ม่องนี้คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0979468222">0979468222</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B7R6">7P95FCCQ+7R6</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ม่องนี้มียำ 1993</div>
+            <div class="cellTwice"><a href="tel:0933343268">0933343268</a>,<a href="tel:0957283387">0957283387</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2B65F">7P95FFCC+65F</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ม่อนอ้วนพังโคน</div>
+            <div class="cellTwice"><a href="tel:0927057826">0927057826</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B9F7">7P95FFF6+9F7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มะปราง คาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0823965542">0823965542</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJ7%2B2G">7P95FFJ7+2G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มังกี้ไอซ์ monkey ice</div>
+            <div class="cellTwice"><a href="tel:0814391717">0814391717</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B3CH">7P95FFG3+3CH</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มาดามออสซี่</div>
+            <div class="cellTwice"><a href="tel:0842698247">0842698247</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BWCG">7P95FFF3+WCG</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มาเด้อ</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCC%2B56R">7P95FFCC+56R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มินิมอล</div>
+            <div class="cellTwice"><a href="tel:0993835563">0993835563</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFC%2B2WJ">7P95FFFC+2WJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มินิมอลคาเฟ่ ดอนวังเวิน</div>
+            <div class="cellTwice"><a href="tel:0982876392">0982876392</a>,<a href="tel:0872252570">0872252570</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCPX%2BCHR">7P95FCPX+CHR</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มิลล์กี้ กู๊ด</div>
+            <div class="cellTwice"><a href="tel:0933288768">0933288768</a>,<a href="tel:0930297789">0930297789</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BCRQ">7P95FFF5+CRQ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มิสเตอร์ โดนัท</div>
+            <div class="cellTwice"><a href="tel:042737752">042737752</a>,<a href="tel:0819847904">0819847904</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B5Q">7P95FCCQ+5Q</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">มีนาก๋วยจั๋บน้ำใส</div>
+            <div class="cellTwice"><a href="tel:0903535265">0903535265</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH7%2BQ23">7P95FFH7+Q23</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แม่ขาว ขนมจีนน้ำยา</div>
+            <div class="cellTwice"><a href="tel:0874260434">0874260434</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2BVM9">7P95FFG3+VM9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แม่ยง อาหารตามสั่ง ก๋วยเตี๋ยว</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH6%2BC94">7P95FFH6+C94</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แม่ลีครกสะดุ้ง</div>
+            <div class="cellTwice"><a href="tel:0850831215">0850831215</a>,<a href="tel:0821489778">0821489778</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF7%2BC2">7P95FFF7+C2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แมวน้ำกะเพรา</div>
+            <div class="cellTwice"><a href="tel:0983828325">0983828325</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJ8%2BH4C">7P95FFJ8+H4C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ยัวร์โฮป</div>
+            <div class="cellTwice"><a href="tel:0946465295">0946465295</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2B9G">7P95FFF9+9G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ยำจิ๊กโก๋ แอท โก๋ฟิชชิ่ง</div>
+            <div class="cellTwice"><a href="tel:0961695465">0961695465</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG7%2BMW">7P95FFG7+MW</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ยิ้มศรีเมือง</div>
+            <div class="cellTwice"><a href="tel:0867950780">0867950780</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC4%2B26C">7P95FFC4+26C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แยกปังปัง</div>
+            <div class="cellTwice"><a href="tel:0952943494">0952943494</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BCCX">7P95FFF9+CCX</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">รถเข็นบะหมี่เกี๊ยว (หน้าไปรษณีย์)</div>
+            <div class="cellTwice"><a href="tel:0810526888">0810526888</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BJ7R">7P95FFF3+J7R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ราชาก๋วยจั๊บ</div>
+            <div class="cellTwice"><a href="tel:0850138079">0850138079</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCGX%2B3PP">7P95FCGX+3PP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ราชาบะหมี่กวางตุ้ง (เจริญฟาร์มาซี)</div>
+            <div class="cellTwice"><a href="tel:0883262028">0883262028</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BM5G">7P95FFF3+M5G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ร้านตำตีน (สี่แยกไฟแดงโต้รุ่ง)</div>
+            <div class="cellTwice"><a href="tel:0951685597">0951685597</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BQP">7P95FFF3+QP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ร้านเสื้อผ้าคุณเนส (ลึกลับคาเฟ่)</div>
+            <div class="cellTwice"><a href="tel:0821238908">0821238908</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B72C">7P95FFF5+72C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ละมุน</div>
+            <div class="cellTwice"><a href="tel:0945157951">0945157951</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFC%2B3FM">7P95FFFC+3FM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ล้านนานาเค้ก</div>
+            <div class="cellTwice"><a href="tel:0852060951">0852060951</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BMF7">7P95FFF3+MF7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ลาบป๋าวี</div>
+            <div class="cellTwice"><a href="tel:0801882249">0801882249</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC4%2B38V">7P95FFC4+38V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ลาบภูไท</div>
+            <div class="cellTwice"><a href="tel:0911958225">0911958225</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF22%2BMMF">7P95FF22+MMF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ลาบแม่ใจ (ลาบลุงหนวด)</div>
+            <div class="cellTwice"><a href="tel:0862366366">0862366366</a>,<a href="tel:0810504709">0810504709</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B5R9">7P95FFF5+5R9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ลุงโบว์ ก๋วยเตี๋ยวต้มยำ</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG4%2BCVC">7P95FFG4+CVC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ลูกชิ้นรสเด็ด</div>
+            <div class="cellTwice"><a href="tel:0801912024">0801912024</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B63P">7P95FFF6+63P</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">วรารัตน์</div>
+            <div class="cellTwice"><a href="tel:0614432662">0614432662</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BQPP">7P95FFF3+QPP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">วันเวลา </div>
+            <div class="cellTwice"><a href="tel:0801912024">0801912024</a>,<a href="tel:0872425420">0872425420</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B72H">7P95FFF6+72H</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">วิภาปลาเผา</div>
+            <div class="cellTwice"><a href="tel:0807554928">0807554928</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF8W%2B7WV">7P95FF8W+7WV</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เศวตกมล</div>
+            <div class="cellTwice"><a href="tel:0942271431">0942271431</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FF54%2BP9V">7P95FF54+P9V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส.กุ้งเผา</div>
+            <div class="cellTwice"><a href="tel:0956540788">0956540788</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCHM%2B5J">7P95FCHM+5J</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สเต็กเด็กแนว</div>
+            <div class="cellTwice"><a href="tel:0804188111">0804188111</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B6R">7P95FFF4+6R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สเต็กพงษ์อิน</div>
+            <div class="cellTwice"><a href="tel:0661090935">0661090935</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B674">7P95FFF6+674</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สมใจนึก</div>
+            <div class="cellTwice"><a href="tel:0985151011">0985151011</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B6W">7P95FFF4+6W</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำจอย บ้านดอนวังเวิน</div>
+            <div class="cellTwice"><a href="tel:0935479115">0935479115</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFQ2%2BVVP">7P95FFQ2+VVP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำไทยวิทยุ โต้รุ่ง </div>
+            <div class="cellTwice"><a href="tel:0854590091">0854590091</a>,<a href="tel:0611439668">0611439668</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BQH7">7P95FFF3+QH7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำบ้านง่อน</div>
+            <div class="cellTwice"><a href="tel:0969656625">0969656625</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FC9M%2BHJ9">7P95FC9M+HJ9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำป้าดอลลี่</div>
+            <div class="cellTwice"><a href="tel:0934256637">0934256637</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2B8VP">7P95FFF8+8VP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำป๋าเบริ์ด</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BW92">7P95FFF3+W92</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำแม่พร</div>
+            <div class="cellTwice"><a href="tel:0701757521">0701757521</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF9%2BM57">7P95FFF9+M57</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำยายจ๋า</div>
+            <div class="cellTwice"><a href="tel:0818724780">0818724780</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B6V7">7P95FFF5+6V7</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำยายชวน</div>
+            <div class="cellTwice"><a href="tel:0993966232">0993966232</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B3GP">7P95FFFF+3GP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำยายดวง หน้าไปรษณีย์</div>
+            <div class="cellTwice"><a href="tel:0877237431">0877237431</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BM65">7P95FFF3+M65</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำยายน้อย</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B6PV">7P95FFF5+6PV</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำร้านกุญแจ</div>
+            <div class="cellTwice"><a href="tel:0801585962">0801585962</a>,<a href="tel:0610479549">0610479549</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2B74C">7P95FFF5+74C</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำหน้าโลตัสโกเฟรช วัดสว่างภูมิดล</div>
+            <div class="cellTwice"><a href="tel:0813370072">0813370072</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF7%2BXV2">7P95FFF7+XV2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ส้มตำอินดี้</div>
+            <div class="cellTwice"><a href="tel:0821873307">0821873307</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJX%2B6QF">7P95FFJX+6QF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สวีทซีเคร็ต</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B5RJ">7P95FCCQ+5RJ</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สวีทมังกี้</div>
+            <div class="cellTwice"><a href="tel:0822614942">0822614942</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FC39%2B7XM">7P95FC39+7XM</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สองพี่น้อง เซ็นเตอร์พอยท์</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BW88">7P95FFF3+W88</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สามกอหมูกระทะ</div>
+            <div class="cellTwice"><a href="tel:0878614375">0878614375</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2BRMF">7P95FFF6+RMF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">สุมาลีเนื้อย่าง</div>
+            <div class="cellTwice"><a href="tel:0899407555">0899407555</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF5%2BF88">7P95FFF5+F88</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไสวก๋วยเตี๋ยวไก่มะระ</div>
+            <div class="cellTwice"><a href="tel:0610562651">0610562651</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF7%2BV26">7P95FFF7+V26</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมอหมูสด</div>
+            <div class="cellTwice"><a href="tel:0828503759">0828503759</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2B3F5">7P95FFG3+3F5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หม่าล่าติดรมย์</div>
+            <div class="cellTwice"><a href="tel:0819243209">0819243209</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG2%2B85M">7P95FFG2+85M</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมีพ่นไฟ</div>
+            <div class="cellTwice"><a href="tel:0982742654">0982742654</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCF%2BRPV">7P95FFCF+RPV</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมูกระแดะ</div>
+            <div class="cellTwice"><a href="tel:0895148415">0895148415</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B4FC">7P95FFFF+4FC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมูกระทะป๊ะปุ๊</div>
+            <div class="cellTwice"><a href="tel:0957601580">0957601580</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFC9%2BJ6">7P95FFC9+J6</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมู่ซาวด์ คาเฟ่</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFH9%2BG9">7P95FFH9+G9</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมูปิ้งนมสด</div>
+            <div class="cellTwice"><a href="tel:0895340157">0895340157</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BPHW">7P95FFF3+PHW</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หมูสะเต๊ะติดดาว</div>
+            <div class="cellTwice"><a href="tel:0807554928">0807554928</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2BW9R">7P95FFF3+W9R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หยกมณีคาเฟ่</div>
+            <div class="cellTwice"><a href="tel:0611099099">0611099099</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B63">7P95FFFF+63</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">หรั่งแม่และเด็ก</div>
+            <div class="cellTwice"><a href="tel:0993262235">0993262235</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF7%2BWXX">7P95FFF7+WXX</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อย่างโก้ บางอย่างก็ไม่โก้ แอนด์ ปังเตาถ่าน</div>
+            <div class="cellTwice"><a href="tel:0971562284">0971562284</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFJ7%2B9JC">7P95FFJ7+9JC</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อรัช คอฟฟี่ เฮ้าส์</div>
+            <div class="cellTwice"><a href="tel:0958027505">0958027505</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCP%2BM4G">7P95FCCP+M4G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อ้อยมินิมาร์ท</div>
+            <div class="cellTwice"><a href="tel:0923208731">0923208731</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG3%2BHFF">7P95FFG3+HFF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อาริกาโตะ</div>
+            <div class="cellTwice"><a href="tel:0819847904">0819847904</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B5R">7P95FCCQ+5R</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อาหารป้าแดง (ลุงนงค์) สว่างแดนดิน</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFCF%2B5G">7P95FFCF+5G</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อิหล่าตำเหลา (ริมหนองคู)</div>
+            <div class="cellTwice"><a href="tel:0872150750">0872150750</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG2%2BG6">7P95FFG2+G6</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">อุดรโอสถ</div>
+            <div class="cellTwice"><a href="tel:042721077">042721077</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BR93">7P95FFF4+R93</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เอ็มเค MK เรสโตรองต์</div>
+            <div class="cellTwice"><a href="tel:0830996220">0830996220</a>,<a href="tel:042737705">042737705</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B5RP">7P95FCCQ+5RP</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เอ็มไพร์ราดหน้ายอดผัก</div>
+            <div class="cellTwice"><a href="tel:0862265198">0862265198</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF2%2BJF">7P95FFF2+JF</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">แอท สถานีก๋วยเตี๋ยว ตามสั่ง</div>
+            <div class="cellTwice"><a href="tel:0943988889">0943988889</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFM6%2BMJ8">7P95FFM6+MJ8</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไอซ์แอนด์เค้ก (ice and cake) ห้องติดร้านนวด</div>
+            <div class="cellTwice"><a href="tel:0634460982">0634460982</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B638">7P95FFF6+638</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ไอริ ชานมไข่มุก</div>
+            <div class="cellTwice"><a href="tel:0973396283">0973396283</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BCG5">7P95FFF4+CG5</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">ฮิดเด็น ราเมน</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B67H">7P95FFF6+67H</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เฮงเฮงโภชนา</div>
+            <div class="cellTwice"><a href="tel:0933853524">0933853524</a>,<a href="tel:0800675158">0800675158</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2B775">7P95FFF4+775</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">เฮียกุน ข้าวมันไก่</div>
+            <div class="cellTwice"><a href="tel:0988357543">0988357543</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFFF%2B45Q">7P95FFFF+45Q</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">Box Bar บ็อกบาร์คาเฟ่ (ปั๊มน้ำมันคาลเท็กซ์)</div>
+            <div class="cellTwice"><a href="tel:0910183437">0910183437</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF4%2BRP2">7P95FFF4+RP2</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">Eonni Korean BBQ ปิ้งย่างเกาหลี</div>
+            <div class="cellTwice"><a href="tel:0634416365">0634416365</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFG2%2BH6X">7P95FFG2+H6X</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">KC เคซีสุกี้</div>
+            <div class="cellTwice"><a href="tel:0810512252">0810512252</a>,<a href="tel:0899422621">0899422621</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF6%2B638">7P95FFF6+638</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">KFC เคเอฟซี</div>
+            <div class="cellTwice"><a href="tel:0818132504">0818132504</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FCCQ%2B3V">7P95FCCQ+3V</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">MJ เอ็มเจ</div>
+            <div class="cellTwice"></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF3%2B9WG">7P95FFF3+9WG</a></div>
+        </div>
+        <div class="row">
+            <div class="cellTwice">This Too Shall Pass Cafe' by Meena กาแฟมีนา</div>
+            <div class="cellTwice"><a href="tel:0616536669">0616536669</a></div>
+            <div class="cell"><a href="https://www.google.com/maps/place/7P95FFF8%2B4X">7P95FFF8+4X</a></div>
+        </div>
+        <br><br>
+    </div>
+
+    <!-- Add the "findInPage" function -->
+    <script>
+        function findInPage() {
+            // Reset the yellow background color of any previously highlighted text
+            let highlightedText = document.querySelectorAll(".highlightedText");
+            for (let i = 0; i < highlightedText.length; i++) {
+                let node = highlightedText[i];
+                let newNode = document.createTextNode(node.textContent);
+                node.parentNode.replaceChild(newNode, node);
+            }
+
+            // Get the search term from the text box
+            let searchTerm = document.getElementById("searchTerm").value;
+
+            // Create a regular expression from the search term
+            let searchRegEx = new RegExp(searchTerm, "gi");
+
+            // Get all the text nodes in the document
+            let textNodes = getTextNodes(document.body);
+
+            // Loop through all the text nodes
+            for (let i = 0; i < textNodes.length; i++) {
+                let node = textNodes[i];
+                let nodeText = node.textContent;
+
+                // Check if the text node contains the search term
+                if (nodeText.match(searchRegEx)) {
+                    // Create a new span element to wrap around the matched text
+                    let newSpan = document.createElement("span");
+                    newSpan.style.backgroundColor = "yellow";
+                    newSpan.classList.add("highlightedText");
+                    newSpan.innerHTML = nodeText.replace(searchRegEx, `<span class="match">${searchTerm}</span>`);
+
+                    // Replace the text node with the new span element
+                    node.parentNode.replaceChild(newSpan, node);
+                }
+            }
+
+            // Set focus to the first match
+            let firstMatch = document.querySelector(".match");
+            if (firstMatch) {
+                firstMatch.scrollIntoView();
+                firstMatch.classList.add("currentMatch");
+            } else {
+                alert("ไม่พบคำว่า '" + searchTerm + "'");
+            }
+        }
+
+
+        // Helper function to get all text nodes in an element
+        function getTextNodes(element) {
+            let textNodes = [];
+
+            function getTextNodesRecursively(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    textNodes.push(node);
+                } else {
+                    for (let i = 0; i < node.childNodes.length; i++) {
+                        getTextNodesRecursively(node.childNodes[i]);
+                    }
+                }
+            }
+
+            getTextNodesRecursively(element);
+            return textNodes;
+        }
+
+        // Function to go to the previous match
+        function previousMatch() {
+            // Get all matches
+            let matches = document.querySelectorAll(".match");
+
+            // Check if there are any matches
+            if (matches.length === 0) {
+                // If there are no matches, do nothing
+                return;
+            }
+
+            // Find the index of the current match
+            let currentIndex;
+            for (let i = 0; i < matches.length; i++) {
+                if (matches[i].classList.contains("currentMatch")) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            // Remove the "currentMatch" class from the current match
+            matches[currentIndex].classList.remove("currentMatch");
+
+            // Go to the previous match and add the "currentMatch" class
+            let previousIndex = (currentIndex - 1 + matches.length) % matches.length;
+            matches[previousIndex].scrollIntoView();
+            matches[previousIndex].classList.add("currentMatch");
+        }
+
+        // Function to go to the next match
+        function nextMatch() {
+            // Get all matches
+            let matches = document.querySelectorAll(".match");
+
+            // Check if there are any matches
+            if (matches.length === 0) {
+                // If there are no matches, do nothing
+                return;
+            }
+
+            // Find the index of the current match
+            let currentIndex;
+            for (let i = 0; i < matches.length; i++) {
+                if (matches[i].classList.contains("currentMatch")) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            // Remove the "currentMatch" class from the current match
+            matches[currentIndex].classList.remove("currentMatch");
+
+            // Go to the next match and add the "currentMatch" class
+            let nextIndex = (currentIndex + 1) % matches.length;
+            matches[nextIndex].scrollIntoView();
+            matches[nextIndex].classList.add("currentMatch");
+        }
+
+        // Function to handle keydown events
+        function handleKeydown(event) {
+            if (event.key === "ArrowLeft") {
+                // Go to the previous match when the left arrow key is pressed
+                previousMatch();
+            } else if (event.key === "ArrowRight") {
+                // Go to the next match when the right arrow key is pressed
+                nextMatch();
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.querySelector("body > img").scrollIntoView();
+            //window.scroll(0,0) || window.pageYOffset || document.body.scrollTop + (document.documentElement && document.documentElement.scrollTop || 0);
+        }
+
+        // Add a keydown event listener to the document
+        document.addEventListener("keydown", handleKeydown);
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                //window.stop();
+            }
+        };
+    </script>
+</body>
+
+</html>

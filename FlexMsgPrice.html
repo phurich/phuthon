@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<title>ภูธรเดลิเวอรี่</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+
+<head>
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Kanit", Sans-Serif !important;
+        }
+
+        body {
+            font-size: 20px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="w3-container w3-center">
+        <img src="logo600px.png" style="max-width: 100%;height: auto;" alt="ภูธรเดลิเวอรี่">
+    </div>
+    <div class="w3-container w3-center">
+        <h3 id = "pricing_button" class="w3-tag w3-padding w3-round-large w3-green" style="text-decoration: underline solid #4CAF50 50%;text-underline-offset: 30px;" onclick="
+            document.getElementById('condition').style.display = 'none';
+            document.getElementById('condition_button').style.textDecoration =  '';
+            document.getElementById('unsupported').style.display = 'none';
+            document.getElementById('unsupported_button').style.textDecoration =  '';
+            document.getElementById('pricing').style.display = 'block';
+            document.getElementById('pricing_button').style.textDecoration = 'underline solid #4CAF50 50%';
+            document.getElementById('pricing_button').style.textUnderlineOffset = '22px';">ค่าบริการ</h1>
+        <h3 id = "condition_button" class="w3-tag w3-padding w3-round-large w3-deep-orange" onclick="
+            document.getElementById('pricing').style.display = 'none';
+            document.getElementById('pricing_button').style.textDecoration =  '';
+            document.getElementById('unsupported').style.display = 'none';
+            document.getElementById('unsupported_button').style.textDecoration =  '';
+            document.getElementById('condition').style.display = 'block';
+            document.getElementById('condition_button').style.textDecoration = 'underline solid #FF5722 50%';
+            document.getElementById('condition_button').style.textUnderlineOffset = '22px';">เงื่อนไข</h1>
+        <h3 id = "unsupported_button" class="w3-tag w3-padding w3-round-large w3-red" onclick="
+            document.getElementById('pricing').style.display = 'none';
+            document.getElementById('pricing_button').style.textDecoration =  '';
+            document.getElementById('condition').style.display = 'none';
+            document.getElementById('condition_button').style.textDecoration =  '';
+            document.getElementById('unsupported').style.display = 'block';
+            document.getElementById('unsupported_button').style.textDecoration = 'underline solid #F44336 50%';
+            document.getElementById('unsupported_button').style.textUnderlineOffset = '22px';">ไม่รองรับ</h1>
+    </div>
+    <div id="pricing" class="w3-row" style="display: block;">
+        <div class="w3-container">
+            <p>🛵 ไม่เกิน 4 กิโลเมตร</p>
+            <div class="w3-panel w3-round-large w3-pale-green">
+                <p>เขตเทศบาลและพื้นที่ข้างเคียง ค่าบริการเริ่มต้น 40฿</p>
+            </div>
+            <p>🛵 เกิน 4 กิโลเมตร แต่ไม่เกิน 8 กิโลเมตร</p>
+            <div class="w3-panel w3-round-large w3-pale-green">
+                <p>ดงสวรรค์ ทรายมูล ต้าย เปือย ทานตะวัน โพนสูง หนองตาล ค่าบริการเริ่มต้น 70฿</p>
+            </div>
+            <p>🛵 เกิน 8 กิโลเมตร แต่ไม่เกิน 12 กิโลเมตร</p>
+            <div class="w3-panel w3-round-large w3-pale-green">
+                <p>นาทม นาคูน หนองทุ่ม ดงพระเจ้า ถ่อน ยางชุม ทุ่งปลากัด เตาไห ม้า ค่าบริการเริ่มต้น 100฿</p>
+            </div>
+            <p>🛵 เกิน 12 กิโลเมตร แต่ไม่เกิน 16 กิโลเมตร</p>
+            <div class="w3-panel w3-round-large w3-pale-green">
+                <p>ค่าบริการเริ่มต้น 130฿</p>
+            </div>
+            <p>🛵 เกิน 16 กิโลเมตร แต่ไม่เกิน 20 กิโลเมตร</p>
+            <div class="w3-panel w3-round-large w3-pale-green">
+                <p>ค่าบริการเริ่มต้น 160฿</p>
+            </div>
+            <p>มอเตอร์ไซค์ระยะทางตั้งแต่ 20 กิโลเมตรขึ้นไป จะใช้สูตร</p>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🛵 จัดส่งด้วยมอเตอร์ไซค์คิดที่ (10฿ x กิโลเมตร) + 50฿</p>
+            </div>
+            <p>จัดส่งด้วยรถยนต์จะใช้สูตร</p>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚚 จัดส่งด้วยรถยนต์คิดที่ (15฿ x กิโลเมตร) + 300฿</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="condition" class="w3-row" style="display: none;">
+        <div class="w3-container">
+            <p>กรณี 🍜 ร้านอาหารทั่วไป</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ซื้อหลายร้าน +20฿ ต่อร้าน</p>
+            </div>
+            <p>กรณี 🏪 ร้านสะดวกซื้อ ร้านขายยา ร้านขายของทั่วไป และ 🛒 ภายในซุปเปอร์มาร์เก็ต Lotus's</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ซื้อเกิน 4 รายการ ค่าบริการจะบวกเพิ่ม +10฿ ต่อรายการ</p>
+            </div>
+            <p>กรณี 🐟 ตลาดสด</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ซื้อเกิน 4 รายการ ค่าบริการจะบวกเพิ่ม +10฿ ต่อรายการ<br />(🐷 เนื้อสด 🥦 ผักสด 🍎 ผลไม้สด 🌷ดอกไม้สด และตลาดสด ให้บริการถึง 16:00 น.)</p>
+            </div>
+            <p>กรณี 🍴ตลาดโต้รุ่ง</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ซื้อหลายแผง +10฿ ต่อแผง</p>
+            </div>
+            <p>กรณี 📦 สินค้ายกหีบ ยกลัง หรือ ยกกระสอบ</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ค่าบริการจะบวกเพิ่ม +20฿ ต่อหีบ/ลัง/กระสอบ</p>
+            </div>
+            <p>กรณี 📸 ต้องการให้ถ่ายภาพสินค้าหรือบุคคล</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>ค่าบริการจะบวกเพิ่ม +10฿</p>
+            </div>
+            <p>กรณี 🏪 ร้านค้าหรือร้านอาหารเรียกภูธรเดลิเวอรี่ให้เข้ารับงานจัดส่ง</p>
+            <div class="w3-panel w3-round-large w3-khaki">
+                <p>☔ ฟรีประกันภัยสินค้าให้ร้านค้า (ชดเชย 50% ของราคา / สูงสุดชดเชยไม่เกิน 300฿)</p>
+            </div>
+            <p>⚠️หมายเหตุ</p>
+            <div class="w3-panel w3-round-large w3-pale-red w3-center">
+                <p>🐷 น้ำหนักรวมของสินค้าทั้งหมดมากกว่า 10 กิโลกรัม ค่าบริการจะบวกเพิ่ม +20฿</p>
+                <p>หรือ</p>
+                <p>🐘 สินค้าใหญ่ หรือ สินค้าเยอะ หรือ สินค้ายาว จนล้นกระเป๋าขนาด 35x45x35 เซ็นติเมตร
+                    ค่าบริการจะบวกเพิ่ม +20฿</p>
+                <p>(สองกรณีนี้ จะคิดค่าบริการเพียงกรณีใดกรณีหนึ่ง)</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="unsupported" class="w3-row" style="display: none;">
+        <div class="w3-container">
+            <p>ภูธรเดลิเวอรี่ 🚫 ไม่รองรับ 🚫 งานดังต่อไปนี้</p>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การซื้อของสดทุกชนิด "หลัง 16:00 น." (🐷 เนื้อสด 🥦 ผักสด 🍎 ผลไม้สด 🌷ดอกไม้สด) เว้นแต่ลูกค้าจะติดต่อทางร้านไว้แล้ว</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การซื้อสินค้าอิเล็คทรอนิกส์ เครื่องใช้ไฟฟ้า ตลอดจนอุปกรณ์ต่อพ่วงทางอิเล็คทรอนิกส์หรือทางไฟฟ้าทุกชนิด เว้นแต่ลูกค้าจะติดต่อทางร้านไว้แล้ว</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การไปรับจดหมายหรือพัสดุ - การจัดส่งจดหมายหรือพัสดุ กับผู้ให้บริการขนส่งทุกราย</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การไปจองคิว การกดบัตรคิว การติดต่อธนาคาร การติดต่อโรงพยาบาล ตลอดจนการติดต่อหน่วยงานราชการ</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การชำระบิลหรือค่าใช้จ่ายต่าง ๆ ที่ไม่ใช่ ค่าน้ำประปาหรือค่าไฟฟ้า</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การจัดส่งเงินสดหรือสิ่งของมีค่า เช่น เครื่องประดับ อัญมณี ทอง ฯ</p>
+            </div>
+            <div class="w3-panel w3-round-large w3-pale-red">
+                <p>🚫 การขนส่งผู้โดยสารไปตามจุดต่าง ๆ</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                //window.stop();
+            }
+        };
+    </script>
+</body>
+
+</html>
