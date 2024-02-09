@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>ภูธรเดลิเวอรี่</title>
+    <link rel="icon" type="image/png" href="https://phuthon.tiiny.site/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Preconnect links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+    <link rel="stylesheet" href="https://phuthon.tiiny.site/style.css">
+
+    <!-- JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+
+</head>
+
+<body>
+    <img src="https://phuthon.tiiny.site/logo600px.png" alt="ภูธรเดลิเวอรี่">
+    <form id="assignRider" style="margin: 20px;" onsubmit="return validateForm();" action="https://script.google.com/macros/s/AKfycbwU4HFaNT3dEnV8eAhp4xk6rtMIqk8Gma2RBcUkuv92O6IvqTvq7TpkwPUuzjR6zEmdHw/exec" method="post">
+        <div class="form-group row">
+            <label>🛵ไรเดอร์</label>
+            <div class="form-check-inline">
+                <div>
+                    <input name="rider" id="rider_0" type="radio" value="Mo|Ue6a72f0349d132f45b96454d7b32d270|U4af60d20e4bb9bd466330b0a4e76522c" required="required">
+                    <label for="rider_0">โม</label>
+                </div>
+                <div>
+                    <input name="rider" id="rider_1" type="radio" value="Fluke|Ub357c51443beaf4a9164b8131437aba1|U0a02b6557e8c485af0dee29e57e08c08" required="required">
+                    <label for="rider_1">ฟลุ๊ค</label>
+                </div>
+                <div>
+                    <input name="rider" id="rider_2" type="radio" value="Piya|U966035e63ab3e7d6707ec3d226e0995d|U966035e63ab3e7d6707ec3d226e0995d" required="required">
+                    <label for="rider_2">ปิยะ</label>
+                </div>
+                <div>
+                    <input name="rider" id="rider_3" type="radio" value="Champ|U6fd0d6c2e9a26995749ce8d93c888ab1|Uc14c71d9c7151ec26c2f8d7518bc313b" required="required">
+                    <label for="rider_3">แชมป์</label>
+                </div>
+                <div>
+                    <input name="rider" id="rider_4" type="radio" required="required" value="Phurich|U50cf3d26ba28cb6a75ca8a40fba2b2e0|U213d91426c76185aefbe7fb6c2ec56dc">
+                    <label for="rider_4">ภู</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="restaurantList">🔊 แจ้งเตือนร้าน</label>
+            <div class="form-check-inline">
+                <select id="restaurantList" name="restaurantList" multiple="multiple">
+                    <option value="159HomKhaFeSawang">159 Home Cafe</option>
+                    <option value="KuaiChapRotDetSawang">ก๋วยจั๋บรสเด็ด</option>
+                    <option value="KuaiChapUbon1Sawang">ก๋วยจั๋บอุบล</option>
+                </select>
+                <button id="add-to-textbox" title="เพิ่ม/ลบ ร้าน" type="button" class="btn btn-lg btn-warning btn-space" data-toggle="tooltip" data-placement="right">เพิ่ม/ลบ</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label>🔔 แจ้งเตือนร้าน</label>
+            <div class="form-check-inline">
+                <div>
+                    <input name="notify" id="notify_0" type="radio" value="0">
+                    <label for="notify_0">💻ระบบ</label>
+                </div>
+                <div>
+                    <input name="notify" id="notify_1" type="radio" value="1">
+                    <label id="lblNotify_1" data-toggle="tooltip" data-placement="right" for="notify_1">🛵ไรเดอร์</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div id="textareas">
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="stack">
+                <div><label for="detailArea">📝 รายละเอียดงานอื่น ๆ</label></div>
+                <div>
+                    <ul>
+                        <li onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</li>
+                        <li onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</li>
+                        <li onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</li>
+                        <li onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</li>
+                    </ul>
+                </div>
+                <textarea style="width: 100%" id="detailArea" name="detailArea" rows="7" placeholder="รายละเอียดของงาน" required="required"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="stack">
+                <div><label for="address">🏬 สถานที่จัดส่ง</label></div>
+                <div>
+                    <ul>
+                        <li onclick="insertAtCursor('address','☎️ สอบถามเบอร์โทรผู้รับปลายทางกับทางร้านเลย');">☎️
+                            สอบถามเบอร์โทร</li>
+                        <li onclick="insertAtCursor('address','🌐 สอบถามสถานที่จัดส่งและเบอร์โทรศัพท์กับทางร้านเลย');">
+                            🌐 สอบถามสถานที่จัดส่ง</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="stack">
+                <textarea style="width: 100%" id="address" name="address" rows="4" placeholder="ระบุข้อมูลการจัดส่ง เบอร์โทร และพิกัดในรูปแบบ Google Pluscode URL" required="required"></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button name="submit" type="submit" class="btn btn-lg btn-primary">🛵 ส่งงาน</button>
+            <button name="reset" type="reset" class="btn btn-lg btn-danger btn-space">🧹 รีเซ็ท</button>
+        </div>
+    </form>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                let select = document.getElementById("restaurantList");
+                //$(select).multiselect('refresh');
+                let options = Array.from(select.options);
+
+                options.sort(function (a, b) {
+                    return a.text.trim().localeCompare(b.text.trim());
+                });
+                select.innerHTML = "";
+
+                for (let option of options) {
+                    option.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;" + option.innerHTML; //add space before text option
+                    select.appendChild(option);
+                }
+
+                $(select).multiselect('rebuild');
+                $('[data-toggle="tooltip"]').tooltip();
+
+                window.stop();
+            }
+        };
+
+        $('#restaurantList').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: 'ชื่อร้าน',
+            nonSelectedText: 'เลือกร้าน',
+            includeSelectAllOption: false
+        });
+
+        $('#add-to-textbox').click(function () {
+            let selectedOptions = $('#restaurantList option:selected');
+            let index = 0;
+            let orderNumber = createOrderNumber();
+            $('#textareas').empty(); // Clear the existing textareas
+            selectedOptions.each(function () {
+                let label = $(this).text().trim();
+                let nameID = 'restaurantArea' + index++;
+                let textarea = $('<textarea id="' + nameID + '" name="' + nameID + '" rows="5" cols="20" maxlength="300" required="required"></textarea>');
+                let div = $('<div class="label-textarea"></div>');
+                div.append('<label for="' + nameID + '">' + label + '</label>');
+                div.append(textarea);
+                $('#textareas').append(div);
+                document.getElementById(nameID).value = label + '\r\n' + orderNumber + '\r\n';
+            });
+        });
+
+        $('form').on('reset', function () {
+            setTimeout(function () {
+                $('select').multiselect('refresh');
+                $('#textareas').empty(); // Clear the dynamically added textareas
+            }, 500);
+        });
+
+        function insertAtCursor(id, myValue) {
+            myField = document.getElementById(id);
+            //IE support
+            if (document.selection) {
+                myField.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+            }
+            //MOZILLA and others
+            else if (myField.selectionStart || myField.selectionStart == '0') {
+                var startPos = myField.selectionStart;
+                var endPos = myField.selectionEnd;
+                myField.value = myField.value.substring(0, startPos)
+                    + myValue
+                    + myField.value.substring(endPos, myField.value.length);
+                myField.selectionStart = startPos + myValue.length;
+                myField.selectionEnd = startPos + myValue.length;
+            } else {
+                myField.value += myValue;
+            }
+        }
+
+        function createOrderNumber() {
+            let date = new Date();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let seconds = date.getSeconds();
+
+            // Pad single-digit numbers with a leading zero
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+            let orderNumber = "ออเดอร์#" + hours + minutes + seconds;
+            return orderNumber;
+        }
+
+        function validateForm() {
+            if ($('#restaurantList option:selected').length !== $('#textareas')[0].childElementCount) {
+                window.scrollTo({ top: 0 });
+                $('#add-to-textbox').attr('data-original-title', 'ลบร้านหรือกดเพิ่มร้าน').tooltip('show');
+                return false;
+            }
+            if (($('#restaurantList option:selected').length > 0) || ($('#textareas')[0].childElementCount > 0)) {
+                if ($('input[name="notify"]:checked').val() === undefined) {
+                    window.scrollTo({ top: 0 });
+                    $('#lblNotify_1').attr('data-original-title', 'ระบุวิธีการแจ้งเตือน').tooltip('show');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>
