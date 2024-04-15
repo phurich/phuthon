@@ -1,0 +1,2 @@
+var testActionUrl = "https://script.google.com/macros/s/AKfycbyzL2u8HZ8eviN4Ma7qyks0AfEGXnwStwddbgwDQ5Ds/dev";
+var currentActionUrl = "https://script.google.com/macros/s/AKfycbzpAT2V_TmlCnedI5Pem2oN6vswyjq2aItfR3and-E30W4FEiQw_qVfENq_gDasgUWdLQ/exec";

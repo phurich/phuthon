@@ -3,7 +3,7 @@
 
 <head>
     <title>ภูธรเดลิเวอรี่</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="https://phurich.github.io/phuthon/favicon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,19 +15,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://phurich.github.io/phuthon/style.css">
 
     <!-- JavaScript files -->
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
-
+    <script src="https://phurich.github.io/phuthon/actionURL.js"></script>
 </head>
 
 <body>
-    <img src="logo600px.png" alt="ภูธรเดลิเวอรี่">
-    <form id="assignRider" style="margin: 20px;" onsubmit="return validateForm();" action="https://script.google.com/macros/s/AKfycbyTyc5W5DiPhN_ElpPgNLvCNy6C04f8tCrZlXLxGggS464JM86XswX0kJZYRs4ZjdZcnQ/exec" method="post">
+    <img src="https://phurich.github.io/phuthon/logo600px.png" alt="ภูธรเดลิเวอรี่">
+    <form id="assignRider" style="margin: 20px;" onsubmit="return validateForm();" method="post">
         <div class="form-group row">
             <label>🛵ไรเดอร์💨</label>
             <div class="form-check-inline">
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label>🔔 แจ้งเตือนร้าน</label>
+            <label>🔔 แจ้งเตือนโดย</label>
             <div class="form-check-inline">
                 <div>
                     <input name="notify" id="notify_0" type="radio" value="0">
@@ -87,10 +87,10 @@
                 <div><label for="detailArea">📝 รายละเอียดงานอื่น ๆ</label></div>
                 <div>
                     <ul>
-                        <li onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</li>
-                        <li onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</li>
-                        <li onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</li>
-                        <li onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</li>
+                        <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</span></li>
+                        <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</span></li>
+                        <li><span onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</span></li>
+                        <li><span onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</span></li>
                     </ul>
                 </div>
                 <textarea style="width: 100%" id="detailArea" name="detailArea" rows="7" placeholder="รายละเอียดของงาน" required="required"></textarea>
@@ -101,10 +101,8 @@
                 <div><label for="address">🏬 สถานที่จัดส่ง</label></div>
                 <div>
                     <ul>
-                        <li onclick="insertAtCursor('address','☎️ สอบถามเบอร์โทรผู้รับปลายทางกับทางร้านเลย');">☎️
-                            สอบถามเบอร์โทร</li>
-                        <li onclick="insertAtCursor('address','🌐 สอบถามสถานที่จัดส่งและเบอร์โทรศัพท์กับทางร้านเลย');">
-                            🌐 สอบถามสถานที่จัดส่ง</li>
+                        <li><span onclick="insertAtCursor('address','☎️ สอบถามเบอร์โทรผู้รับปลายทางกับทางร้านเลย');">☎️ สอบถามเบอร์โทร</span></li>
+                        <li><span onclick="insertAtCursor('address','🌐 สอบถามสถานที่จัดส่งและเบอร์โทรศัพท์กับทางร้านเลย');">🌐 สอบถามสถานที่จัดส่ง</span></li>
                     </ul>
                 </div>
             </div>
@@ -137,7 +135,7 @@
                 $(select).multiselect('rebuild');
                 $('[data-toggle="tooltip"]').tooltip();
 
-                //window.stop();
+                document.getElementById('assignRider').action = currentActionUrl;
             }
         };
 
@@ -216,6 +214,7 @@
                 $('#add-to-textbox').attr('data-original-title', 'ลบร้านหรือกดเพิ่มร้าน').tooltip('show');
                 return false;
             }
+
             if (($('#restaurantList option:selected').length > 0) || ($('#textareas')[0].childElementCount > 0)) {
                 if ($('input[name="notify"]:checked').val() === undefined) {
                     window.scrollTo({ top: 0 });
@@ -223,6 +222,15 @@
                     return false;
                 }
             }
+
+            if ($('input[name="notify"]:checked').val() !== undefined) {
+                if (($('#restaurantList option:selected').length === 0) || ($('#textareas')[0].childElementCount === 0)) {
+                    window.scrollTo({ top: 0 });
+                    $('#add-to-textbox').attr('data-original-title', 'เพิ่มร้านที่ต้องการแจ้งเตือน').tooltip('show');
+                    return false;
+                }
+            }
+            document.getElementsByName('submit')[0].disabled = true;
             return true;
         }
     </script>
