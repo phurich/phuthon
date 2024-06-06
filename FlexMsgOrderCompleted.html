@@ -17,7 +17,7 @@
 
 <body>
     <img src="https://phurich.github.io/phuthon/logo600px.png" class="mx-auto d-block" alt="ภูธรเดลิเวอรี่">
-    <form id="completeOrder" name="completeOrder" method="post">
+    <form id="completeOrder" name="completeOrder" onsubmit="document.getElementsByName('submit')[0].disabled = true; return true;" method="post">
         <div class="form-group row">
             <label class="col-4">💵วิธีชำระเงิน</label>
             <div>
