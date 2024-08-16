@@ -1,4 +1,4 @@
-body, text, textarea, .btn-lg, .tooltip-inner {
+body, text, textarea, .button-lg, .tooltip-inner {
     font-family: "Kanit", Sans-Serif !important;
     font-size: x-large !important;
 }
@@ -32,6 +32,8 @@ label {
 
 input {
     border-width: 1px;
+    font-size: large;
+    font-family: 'Kanit';
 }
 
 .label-textarea {
@@ -60,7 +62,7 @@ input {
     min-width: 20vw;
 }
 
-.btn-default {
+.button-default {
     background-color: #eee !important;
     height: 60px;
 }
@@ -74,14 +76,29 @@ input {
     justify-content: center;
 }
 
-.btn-space {
+.button-space {
     margin-left: 30px;
+}
+
+.button-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.button-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
 .button-danger {
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
+}
+
+.button {
     padding: 6px 12px;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
@@ -110,4 +127,12 @@ img {
 
 .strikethrough {
     text-decoration: line-through;
+}
+
+#errorMsg {
+    background-color: #ffdddd;
+    border: 2px solid red;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 10px;
 }
