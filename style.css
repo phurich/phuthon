@@ -62,7 +62,7 @@ input {
     min-width: 20vw;
 }
 
-.button-default {
+.btn-default {
     background-color: #eee !important;
     height: 60px;
 }
