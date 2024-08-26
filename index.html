@@ -32,23 +32,23 @@
             <label>🛵ไรเดอร์💨</label>
             <div class="form-check-inline">
                 <div>
-                    <input name="rider" id="rider_0" type="radio" value="Mo|Ufe2ad2a0e3a3c6d42c5de0716034dacd|Ufe2ad2a0e3a3c6d42c5de0716034dacd" required="required">
+                    <input name="rider" id="rider_0" type="radio" value="Mo|Ufe2ad2a0e3a3c6d42c5de0716034dacd" required="required">
                     <label for="rider_0">โม</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_1" type="radio" value="Fluke|Ub357c51443beaf4a9164b8131437aba1|U0a02b6557e8c485af0dee29e57e08c08" required="required">
+                    <input name="rider" id="rider_1" type="radio" value="Fluke|Ub357c51443beaf4a9164b8131437aba1" required="required">
                     <label for="rider_1">ฟลุ๊ค</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_2" type="radio" value="Piya|U966035e63ab3e7d6707ec3d226e0995d|U966035e63ab3e7d6707ec3d226e0995d" required="required">
+                    <input name="rider" id="rider_2" type="radio" value="Piya|U966035e63ab3e7d6707ec3d226e0995d" required="required">
                     <label for="rider_2">ปิยะ</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_3" type="radio" value="Champ|U6fd0d6c2e9a26995749ce8d93c888ab1|Uc14c71d9c7151ec26c2f8d7518bc313b" required="required">
+                    <input name="rider" id="rider_3" type="radio" value="Champ|U6fd0d6c2e9a26995749ce8d93c888ab1" required="required">
                     <label for="rider_3">แชมป์</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_4" type="radio" required="required" value="Phurich|U50cf3d26ba28cb6a75ca8a40fba2b2e0|U213d91426c76185aefbe7fb6c2ec56dc">
+                    <input name="rider" id="rider_4" type="radio" required="required" value="Phurich|U50cf3d26ba28cb6a75ca8a40fba2b2e0">
                     <label for="rider_4">ภู</label>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <option value="KuaiChapRotDetSawang">ก๋วยจั๋บรสเด็ด</option>
                     <option value="KuaiChapUbon1Sawang">ก๋วยจั๋บอุบล</option>
                 </select>
-                <button id="add-to-textbox" title="เพิ่ม/ลบ ร้าน" type="button" class="btn btn-lg btn-warning btn-space" data-toggle="tooltip" data-placement="right">เพิ่ม/ลบ</button>
+                <button id="add-to-textbox" title="เพิ่ม/ลบ ร้าน" type="button" class="button button-lg button-warning button-space" data-toggle="tooltip" data-placement="right">เพิ่ม/ลบ</button>
             </div>
         </div>
         <div class="form-group row">
@@ -111,8 +111,8 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <button name="submit" type="submit" class="btn btn-lg btn-primary">🛵 ส่งงาน</button>
-            <button name="reset" type="reset" class="btn btn-lg btn-danger btn-space">🧹 รีเซ็ท</button>
+            <button name="submit" type="submit" class="button button-lg button-primary">🛵 ส่งงาน</button>
+            <button name="reset" type="reset" class="button button-lg button-danger button-space">🧹 รีเซ็ท</button>
         </div>
     </form>
     <script>
@@ -160,7 +160,7 @@
                 div.append('<label for="' + nameID + '">' + label + '</label>');
                 div.append(textarea);
                 $('#textareas').append(div);
-                document.getElementById(nameID).value = label + '\r\n' + orderNumber + '\r\n';
+                document.getElementById(nameID).value = label + ' \r\n' + orderNumber + ' \r\n';
             });
         });
 
@@ -200,14 +200,15 @@
             let minutes = date.getMinutes();
             let seconds = date.getSeconds();
 
-            // Pad single-digit numbers with a leading zero
-            hours = (hours < 10) ? "0" + hours : hours;
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            seconds = (seconds < 10) ? "0" + seconds : seconds;
+            // Calculate the number of seconds since midnight
+            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
-            let orderNumber = "ออเดอร์#" + hours + minutes + seconds;
+            // Convert to a string and pad with leading zeros if necessary
+            let orderNumber = "ออเดอร์#" + totalSeconds.toString().padStart(5, '0');
+
             return orderNumber;
         }
+
 
         function validateForm() {
             if ($('#restaurantList option:selected').length !== $('#textareas')[0].childElementCount) {
@@ -231,7 +232,7 @@
                     return false;
                 }
             }
-            
+
             document.getElementsByName('submit')[0].disabled = true;
             return true;
         }
