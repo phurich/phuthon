@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>ภูธรเดลิเวอรี่</title>
+    <link rel="icon" type="image/png" href="https://phurich.github.io/phuthon/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Preconnect links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- CSS files -->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+    <link rel="stylesheet" href="https://phurich.github.io/phuthon/style.css">
+    <!--link rel="stylesheet" href="https://phuthon.w3spaces.com/style.css"-->
+    <base target="_top">
+
+    <!-- JavaScript files -->
+    <script src="https://phurich.github.io/phuthon/actionURL.js"></script>
+</head>
+
+<body>
+    <img src="https://phurich.github.io/phuthon/logo600px.png" style="max-width:100%;margin: auto;display: block;" alt="ภูธรเดลิเวอรี่">
+    <form id="orderCancel" style="margin: 20px;" method="post">
+        <div class="form-group row">
+            <div class="justify-content-center">
+                โดยทั่วไปลูกค้ายินดีรับเท่าที่ได้ 😊 หรือ เปลี่ยนเป็นอย่างอื่น
+                📞ขอเพียงแจ้งให้ลูกค้าทราบ<br><br>
+            </div>
+            <?!= include('ErrorMsg.html') ?>
+            <div>
+                <input name="cancel" id="cancel0" type="radio" value="ยกเลิกบางส่วน" required="required" onclick="showContent();">
+                <label for="cancel0">ยกเลิก "บางรายการ" (กดรายการเพื่อยกเลิก)</label>
+                <div id="content" style="margin-left: 50px; display: none;">
+                </div>
+            </div>
+            <div>
+                <input name="cancel" id="cancel1" type="radio" value="ยกเลิกทั้งหมด" required="required" onclick="hideContent();">
+                <label for="cancel1">ยกเลิกทั้งหมด</label>
+            </div>
+            <div>
+                <!-- Hidden textarea to store the content data -->
+                <textarea name="canceledList" id="canceledList" style="display: none;"></textarea>
+            </div>
+            <div><input name="restaurant" id="restaurant" type="hidden" value=""></div>
+            <div><input name="orderNumber" id="orderNumber" type="hidden" value=""></div>
+        </div>
+        <div class="row justify-content-center">
+            <label for="reason">ชี้แจงเพิ่มเติม (ถ้ามี)</label>
+            <input name="reason" id="reason" type="text" style="width:35%">
+        </div>
+        <div class="row justify-content-center">
+            <label for="quickReason">คำชี้แจงด่วน</label>
+            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">? เหลือแค่ 1</span>
+            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">? หมด</span>
+            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">ร้านปิด</span>
+            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">ร้านยังไม่เปิด จะเปิด ?:00 น.</span>
+        </div>
+        <div class="row justify-content-center">
+            <button name="submit" type="submit" class="button button-lg button-danger">🚫ยกเลิกออเดอร์😥</button>
+        </div>
+    </form>
+</body>
+<script>
+    function assignText(event) {
+        document.getElementById('reason').value += event.target.innerText;
+    }
+
+    function showContent() {
+        document.getElementById('content').style.display = 'block';
+        document.getElementById('canceledList').value = document.getElementById('content').innerText;
+    }
+
+    function hideContent() {
+        document.getElementById('content').style.display = 'none';
+        document.getElementById('canceledList').value = '';
+    }
+
+    function ensureSpacesAroundNumbers(input) {
+        // Regular expression to match numbers that are not already surrounded by spaces
+        let regex = /(\s+)?\d+(\.\d+)?(\s+)?/gm;
+        // Function to add spaces around a match
+        let addSpaces = match => ' ' + match.trim() + ' ';
+        // Replace numbers not surrounded by spaces with the same number surrounded by spaces
+        let output = input.replace(regex, addSpaces);
+        return output;
+    }
+
+    function processContent() {
+        let content = document.getElementById('content');
+        let manipulatedContent = ensureSpacesAroundNumbers(content.textContent);
+        content.innerHTML = manipulatedContent.split(/\|+/gm).map(word => {
+            return `<span>${word}</span><br>`;
+        }).join(' ');
+        Array.from(content.children).forEach(child => {
+            child.addEventListener('click', function() {
+                this.classList.toggle('strikethrough');
+                if (this.classList.contains('strikethrough')) {
+                    // If the class 'strikethrough' is present, add brackets
+                    this.textContent = '[' + this.textContent + ']';
+                } else {
+                    // If the class 'strikethrough' is not present, remove brackets
+                    this.textContent = this.textContent.replace(/^\[/, '').replace(/\]$/, '');
+                }
+                document.getElementById('canceledList').value = document.getElementById('content').textContent;
+            });
+        });
+    }
+
+    document.getElementById('orderCancel').addEventListener('submit', function(e) {
+        let radioButtons = document.getElementsByName('cancel');
+        let firstRadioButton = radioButtons[0];
+
+        if (firstRadioButton.checked) {
+            let content = document.getElementById('content');
+            let isStrikethrough = false;
+            Array.from(content.children).forEach(child => {
+                if (child.classList.contains('strikethrough')) {
+                    isStrikethrough = true;
+                }
+            });
+
+            if (!isStrikethrough) {
+                displayErrorMsg('กรุณาระบุรายการยกเลิก');
+                e.preventDefault();
+            }
+        }
+    });
+
+    document.onreadystatechange = () => {
+        if (document.readyState === "complete") {
+
+            // Get the full URL from the browser's address bar
+            const url = window.location.href;
+            // Extract the query string
+            const queryString = url.split('?')[1];
+            // Decode the query string
+            const decodedString = decodeURIComponent(queryString);
+            // Extract key-value pairs
+            const params = new URLSearchParams(decodedString);
+            // Retrieve parameters
+            //const page = params.get('page');
+            //const rider = params.get('rider');
+            const list = params.get('list').replace(/[\r\n]+/gm,"|");
+            const regex = /^(.*)\|.+(\d{5})\|/gm;
+            const matched = regex.exec(list);
+
+            if (matched) {
+                document.getElementById("restaurant").value = matched[1];
+                document.getElementById("orderNumber").value = matched[2];
+                document.getElementById("content").innerHTML = list.replace(matched[0],"");
+            } else {
+                document.getElementById("content").innerHTML = "😥 ผิดพลาด ไม่พบรายการ";
+            }
+
+            document.getElementById('orderCancel').action = currentActionUrl;
+            processContent();
+        }
+    };
+
+</script>
+
+</html>
