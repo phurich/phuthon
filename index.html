@@ -2,66 +2,146 @@
 <html lang="th">
 
 <head>
-    <title>ภูธรเดลิเวอรี่</title>
-    <link rel="icon" type="image/png" href="https://phurich.github.io/phuthon/favicon.png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Preconnect links -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    <script src="./library/utils.js"></script>
     <!-- CSS files -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
-    <link rel="stylesheet" href="https://phurich.github.io/phuthon/style.css">
 
     <!-- JavaScript files -->
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
-    <script src="https://phurich.github.io/phuthon/actionURL.js"></script>
+    <style>
+        .label-textarea {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allows wrapping of elements */
+            align-items: center;
+        }
+
+        .first-column {
+            display: flex;
+            /* Align label and input in one row */
+            flex-direction: column;
+            /* Stack label and input vertically */
+            gap: 0.5em;
+            /* Space between label and input */
+        }
+
+        .second-column textarea {
+            height: 5em;
+            /* Adjust height of textarea */
+        }
+
+
+        .label-textarea label,
+        .label-textarea input {
+            flex: 0 0 auto;
+            /* Keep label and input in the same column */
+        }
+
+        .label-textarea textarea {
+            flex: 1 1 100%;
+            /* Make the textarea take up the second column or full width */
+        }
+
+        /* Responsive design for small screens */
+        @media (max-width: 600px) {
+            .label-textarea {
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: flex-start;
+                /* Align elements to the left */
+            }
+        }
+
+        .checkbox {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+    </style>
+    <html-header></html-header>
 </head>
 
 <body>
-    <img src="https://phurich.github.io/phuthon/logo600px.png" alt="ภูธรเดลิเวอรี่">
+    <img src="./library/logo600px.png" alt="ภูธรเดลิเวอรี่">
     <form id="assignRider" style="margin: 20px;" onsubmit="return validateForm();" method="post">
         <div class="form-group row">
             <label>🛵ไรเดอร์💨</label>
             <div class="form-check-inline">
                 <div>
-                    <input name="rider" id="rider_0" type="radio" value="Mo|Ufe2ad2a0e3a3c6d42c5de0716034dacd" required="required">
-                    <label for="rider_0">โม</label>
+                    <input name="rider" id="rider_0" type="radio" value="Mo|Ufe2ad2a0e3a3c6d42c5de0716034dacd">
+                    <label id="lblRider_0" for="rider_0">โม</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_1" type="radio" value="Fluke|Ub357c51443beaf4a9164b8131437aba1" required="required">
+                    <input name="rider" id="rider_1" type="radio" value="Fluke|Ub357c51443beaf4a9164b8131437aba1">
                     <label for="rider_1">ฟลุ๊ค</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_2" type="radio" value="Piya|U966035e63ab3e7d6707ec3d226e0995d" required="required">
+                    <input name="rider" id="rider_2" type="radio" value="Piya|U966035e63ab3e7d6707ec3d226e0995d">
                     <label for="rider_2">ปิยะ</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_3" type="radio" value="Champ|U6fd0d6c2e9a26995749ce8d93c888ab1" required="required">
+                    <input name="rider" id="rider_3" type="radio" value="Champ|U6fd0d6c2e9a26995749ce8d93c888ab1">
                     <label for="rider_3">แชมป์</label>
                 </div>
                 <div>
-                    <input name="rider" id="rider_4" type="radio" required="required" value="Phurich|U50cf3d26ba28cb6a75ca8a40fba2b2e0">
+                    <input name="rider" id="rider_4" type="radio" value="Phurich|U50cf3d26ba28cb6a75ca8a40fba2b2e0">
                     <label for="rider_4">ภู</label>
                 </div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="restaurantList">🔊 แจ้งเตือนร้าน</label>
+            <label>⏱ ตั้งเวลาส่งงานให้ไรเดอร์</label>
+            <select name="timeDelay" id="timeDelay">
+                <option value="">ทันที</option>
+                <option value="10m">10 นาที</option>
+                <option value="20m">20 นาที</option>
+                <option value="30m">30 นาที</option>
+                <option value="40m">40 นาที</option>
+                <option value="50m">50 นาที</option>
+                <option value="60m">60 นาที</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="restaurantList">🔊 แจ้งเตือนร้านทันที</label>
             <div class="form-check-inline">
                 <select id="restaurantList" name="restaurantList" multiple="multiple">
-                    <option value="159HomKhaFeSawang">159 Home Cafe</option>
-                    <option value="KuaiChapRotDetSawang">ก๋วยจั๋บรสเด็ด</option>
-                    <option value="KuaiChapUbon1Sawang">ก๋วยจั๋บอุบล</option>
+                    <option value="KuaiChapRo">ก๋วยจั๊บรสเด็ด</option>
+                    <option value="KuaiChapUb">ก๋วยจั๊บอุบล</option>
+                    <option value="KTKaiMaRaB">ก๋วยเตี๋ยวไก่มะระ@บางจาก</option>
+                    <option value="KTChaoKao">ก๋วยเตี๋ยวเจ้าเก่า</option>
+                    <option value="KTTomYam">ก๋วยเตี๋ยวต้มยำ</option>
+                    <option value="KTMiaLuang">ก๋วยเตี๋ยวเมียหลวง</option>
+                    <option value="KanBan">การบ้าน</option>
+                    <option value="KhaoTomKho">ข้าวต้มโคคึก</option>
+                    <option value="KMKKhunPhu">ข้าวมันไก่คุณพุก</option>
+                    <option value="KCSuKi">เคซีสุกี้</option>
+                    <option value="ChaOiLapPe">จ่าอ๋อยลาบเป็ด</option>
+                    <option value="CheTaenNue">เจ๊แตนเนื้อสด</option>
+                    <option value="ChehMuaiTa">เจ๊หมวยตามสั่ง</option>
+                    <option value="NaNaKhopFi">นานา</option>
+                    <option value="PhengPhiPo">เพ็งพี่ป้อม</option>
+                    <option value="MaeLiKhrok">แม่ลีครกสะดุ้ง</option>
+                    <option value="RotKhenBaM">รถเข็นบะหมี่@ไปรษณีย์</option>
+                    <option value="RaChaBaMiK">ราชาบะหมี่กวางตุ้ง</option>
+                    <option value="LaMun">ละมุน</option>
+                    <option value="LapMaeChai">ลาบแม่ใจ</option>
+                    <option value="SaWetKaMon">เศวตกมล</option>
+                    <option value="STChoiBanD">ส้มตำจอย</option>
+                    <option value="STThaiWitT">ส้มตำไทยวิทยุ</option>
+                    <option value="STPaBird">ส้มตำป๋าเบริ์ด</option>
+                    <option value="STYaiCha">ส้มตำยายจ๋า</option>
+                    <option value="SuMaLiNuea">สุมาลีเนื้อย่าง</option>
+                    <option value="SaiWaKaiMa">ไสวก๋วยเตี๋ยวไก่มะระ</option>
+                    <option value="MaLaTitRom">หม่าล่าติดรมย์</option>
+                    <option value="AmzBanNgon">อเมซอน ปตท.บ้านง่อน</option>
+                    <option value="AmzSchool">อเมซอน ปตท.สด.</option>
+                    <option value="AmzSaNam">อเมซอน ปตท.สนามชัย</option>
+                    <option value="EmPhai">เอ็มไพร์ราดหน้ายอดผัก</option>
                 </select>
-                <button id="add-to-textbox" title="เพิ่ม/ลบ ร้าน" type="button" class="button button-lg button-warning button-space" data-toggle="tooltip" data-placement="right">เพิ่ม/ลบ</button>
+                <button id="add-to-textbox" title="เพิ่ม/ลบ ร้าน" type="button" class="button button-lg button-warning button-space">เพิ่ม/ลบ</button>
             </div>
         </div>
         <div class="form-group row">
@@ -69,11 +149,11 @@
             <div class="form-check-inline">
                 <div>
                     <input name="notify" id="notify_0" type="radio" value="0">
-                    <label for="notify_0">💻ระบบ</label>
+                    <label id="lblNotify_0" for="notify_0">💻ระบบ</label>
                 </div>
                 <div>
                     <input name="notify" id="notify_1" type="radio" value="1">
-                    <label id="lblNotify_1" data-toggle="tooltip" data-placement="right" for="notify_1">🛵ไรเดอร์</label>
+                    <label for="notify_1">🛵ไรเดอร์</label>
                 </div>
             </div>
         </div>
@@ -83,36 +163,31 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="stack">
-                <div><label for="detailArea">📝 รายละเอียดงานอื่น ๆ</label></div>
-                <div>
-                    <ul>
-                        <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</span></li>
-                        <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</span></li>
-                        <li><span onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</span></li>
-                        <li><span onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</span></li>
-                    </ul>
-                </div>
-                <textarea style="width: 100%" id="detailArea" name="detailArea" rows="7" placeholder="รายละเอียดของงาน" required="required"></textarea>
+            <div><label for="detailArea">📝 รายละเอียดงานอื่น ๆ</label></div>
+            <div>
+                <ul>
+                    <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</span></li>
+                    <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</span></li>
+                    <li><span onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</span></li>
+                    <li><span onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</span></li>
+                </ul>
             </div>
+            <textarea style="width: 100%" id="detailArea" name="detailArea" rows="7" maxlength="900" placeholder="รายละเอียดของงาน"></textarea>
         </div>
         <div class="form-group row">
-            <div class="stack">
-                <div><label for="address">🏬 สถานที่จัดส่ง</label></div>
-                <div>
-                    <ul>
-                        <li><span onclick="insertAtCursor('address','☎️ สอบถามเบอร์โทรผู้รับปลายทางกับทางร้านเลย');">☎️ สอบถามเบอร์โทร</span></li>
-                        <li><span onclick="insertAtCursor('address','🌐 สอบถามสถานที่จัดส่งและเบอร์โทรศัพท์กับทางร้านเลย');">🌐 สอบถามสถานที่จัดส่ง</span></li>
-                    </ul>
-                </div>
+            <div><label for="address">🏬 สถานที่จัดส่ง</label></div>
+            <div>
+                <ul>
+                    <li><span onclick="insertAtCursor('address','☎️ สอบถามเบอร์โทรผู้รับปลายทางกับทางร้านเลย');">☎️ สอบถามเบอร์โทร</span></li>
+                    <li><span onclick="insertAtCursor('address','🌐 สอบถามสถานที่จัดส่งและเบอร์โทรศัพท์กับทางร้านเลย');">🌐 สอบถามสถานที่จัดส่ง</span></li>
+                </ul>
             </div>
-            <div class="stack">
-                <textarea style="width: 100%" id="address" name="address" rows="4" placeholder="ระบุข้อมูลการจัดส่ง เบอร์โทร และพิกัดในรูปแบบ Google Pluscode URL" required="required"></textarea>
-            </div>
+            <textarea style="width: 100%" id="address" name="address" rows="4" maxlength="900" placeholder="ระบุข้อมูลการจัดส่ง เบอร์โทร และพิกัดในรูปแบบ Google Pluscode URL"></textarea>
         </div>
         <div class="row justify-content-center">
             <button name="submit" type="submit" class="button button-lg button-primary">🛵 ส่งงาน</button>
             <button name="reset" type="reset" class="button button-lg button-danger button-space">🧹 รีเซ็ท</button>
+            <button name="toggle" type="button" class="button button-lg button-warning button-space" onclick="document.getElementsByName('submit')[0].disabled = false;">🔁</button>
         </div>
     </form>
     <script>
@@ -135,7 +210,8 @@
                 $(select).multiselect('rebuild');
                 $('[data-toggle="tooltip"]').tooltip();
 
-                document.getElementById('assignRider').action = currentActionUrl;
+                //document.getElementById('assignRider').action = currentActionUrl;
+                document.getElementById('assignRider').action = testActionUrl;
             }
         };
 
@@ -154,15 +230,34 @@
             $('#textareas').empty(); // Clear the existing textareas
             selectedOptions.each(function () {
                 let label = $(this).text().trim();
-                let nameID = 'restaurantArea' + index++;
-                let textarea = $('<textarea id="' + nameID + '" name="' + nameID + '" rows="5" cols="20" maxlength="300" required="required"></textarea>');
+                let nameID = 'restaurantArea' + index;
+
+                // Create elements
+                let labelElement = $('<label for="' + nameID + '">' + label + '</label>');
+                let textarea = $('<textarea id="' + nameID + '" name="' + nameID + '" rows="5" cols="20" maxlength="900"></textarea>');
+                let fileInput = $('<input type="file" id="image' + index + '" name="image' + index + '" multiple>'); // Create file input element
                 let div = $('<div class="label-textarea"></div>');
-                div.append('<label for="' + nameID + '">' + label + '</label>');
-                div.append(textarea);
+
+                // Append label and file input to the first column, textarea to the second
+                let firstColumn = $('<div class="first-column"></div>');
+                firstColumn.append(labelElement);
+                firstColumn.append(fileInput);
+
+                let secondColumn = $('<div class="second-column"></div>');
+                secondColumn.append(textarea);
+
+                div.append(firstColumn);
+                div.append(secondColumn);
+
+                // Append the div to the textareas container
                 $('#textareas').append(div);
-                document.getElementById(nameID).value = label + ' \r\n' + orderNumber + ' \r\n';
+
+                // Pre-fill the textarea with the label and order number
+                document.getElementById(nameID).value = label + '\r\n' + orderNumber + '\r\n';
+                index++;
             });
         });
+
 
         $('form').on('reset', function () {
             setTimeout(function () {
@@ -209,32 +304,104 @@
             return orderNumber;
         }
 
-
         function validateForm() {
+
+            // Flag to track if validation has failed
+            let validationFailed = false;
+
+            // Variable to store total character count across all textareas
+            let totalCharCount = 0;
+
+            // Get all static and dynamically generated textareas
+            let allTextareas = document.querySelectorAll('textarea');
+
+            // Loop through each textarea and add its character length to totalCharCount
+            allTextareas.forEach(function (textarea) {
+                totalCharCount += textarea.value.length;
+            });
+
+            // Validate Rider selection
+            if (!$('input[name="rider"]:checked').length) {
+                $('#lblRider_0')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                swalShowError('ระบุไรเดอร์');
+                return false;
+            }
+
+            // Check and validate #detailArea based on conditions
+            const restaurantCount = $('#restaurantList option:selected').length;
+            const textAreaCount = $('#textareas')[0].childElementCount;
+
+            let isDetailAreaRequired = true;
+            if ((restaurantCount > 0 || textAreaCount > 0) && (restaurantCount === textAreaCount)) {
+                isDetailAreaRequired = false;
+            }
+
+            if (isDetailAreaRequired && $('#detailArea').val().trim() === "") {
+                $('#detailArea')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                swalShowError('ระบุรายละเอียดงาน');
+                return false;
+            }
+
+            // Validate Address Area
+            if ($('#address').val().trim() === "") {
+                $('#address')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                swalShowError('ระบุสถานที่จัดส่ง');
+                return false;
+            }
+
+            // Check if total characters exceed 900
+            if (totalCharCount > 900) {
+                swalShowError('ข้อความทั้งหมดต้องไม่เกิน 900 ตัวอักษร ' + '(' + totalCharCount + ')');
+                return false;  // Prevent form submission
+            }
+
             if ($('#restaurantList option:selected').length !== $('#textareas')[0].childElementCount) {
-                window.scrollTo({ top: 0 });
-                $('#add-to-textbox').attr('data-original-title', 'ลบร้านหรือกดเพิ่มร้าน').tooltip('show');
+                $('#add-to-textbox')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                swalShowError('ลบร้านหรือกดเพิ่มร้าน');
                 return false;
             }
 
             if (($('#restaurantList option:selected').length > 0) || ($('#textareas')[0].childElementCount > 0)) {
                 if ($('input[name="notify"]:checked').val() === undefined) {
-                    window.scrollTo({ top: 0 });
-                    $('#lblNotify_1').attr('data-original-title', 'ระบุวิธีการแจ้งเตือน').tooltip('show');
+                    $('#lblNotify_0')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                    swalShowError('ระบุวิธีการแจ้งเตือน');
                     return false;
                 }
             }
 
             if ($('input[name="notify"]:checked').val() !== undefined) {
                 if (($('#restaurantList option:selected').length === 0) || ($('#textareas')[0].childElementCount === 0)) {
-                    window.scrollTo({ top: 0 });
-                    $('#add-to-textbox').attr('data-original-title', 'เพิ่มร้านที่ต้องการแจ้งเตือน').tooltip('show');
+                    $('#add-to-textbox')[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                    swalShowError('ระบุร้านที่ต้องการแจ้งเตือน');
                     return false;
                 }
             }
 
+            $('#textareas textarea[id^="restaurantArea"]').each(function () {
+                let value = $(this).val();
+                let regex = /(?<=\d{5}\s)[\s\S]*/gm;
+                let match = value.match(regex);
+
+                // Find the associated label text
+                let label = $('label[for="' + $(this).attr('id') + '"]').text();
+
+                if (!match || match[0].trim().length === 0) {
+                    $(this)[0].scrollIntoView({ behavior: "smooth", block: "center" });
+                    swalShowError('ระบุรายการสินค้าร้าน' + label);
+                    validationFailed = true;
+                }
+                // If matched and not empty, do nothing
+            });
+
+
+            // If validation failed, prevent form submission
+            if (validationFailed) {
+                return false;  // Stop form submission
+            }
+
             document.getElementsByName('submit')[0].disabled = true;
-            return true;
+            //alert('Sent');
+            return true;  // Allow form submission if validation passes
         }
     </script>
 </body>

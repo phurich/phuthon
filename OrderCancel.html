@@ -2,43 +2,26 @@
 <html lang="th">
 
 <head>
-    <title>ภูธรเดลิเวอรี่</title>
-    <link rel="icon" type="image/png" href="https://phurich.github.io/phuthon/favicon.png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Preconnect links -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- CSS files -->
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
-    <link rel="stylesheet" href="https://phurich.github.io/phuthon/style.css">
-    <!--link rel="stylesheet" href="https://phuthon.w3spaces.com/style.css"-->
-    <base target="_top">
-
-    <!-- JavaScript files -->
-    <script src="https://phurich.github.io/phuthon/actionURL.js"></script>
+    <script src="./library/utils.js"></script>
+    <html-header></html-header>
 </head>
 
 <body>
-    <img src="https://phurich.github.io/phuthon/logo600px.png" style="max-width:100%;margin: auto;display: block;" alt="ภูธรเดลิเวอรี่">
+    <img src="./library/logo600px.png" style="max-width:100%;margin: auto;display: block;" alt="ภูธรเดลิเวอรี่">
     <form id="orderCancel" style="margin: 20px;" method="post">
-        <div class="form-group row">
+        <div class="row">
             <div class="justify-content-center">
                 โดยทั่วไปลูกค้ายินดีรับเท่าที่ได้ 😊 หรือ เปลี่ยนเป็นอย่างอื่น
                 📞ขอเพียงแจ้งให้ลูกค้าทราบ<br><br>
             </div>
-            <?!= include('ErrorMsg.html') ?>
             <div>
-                <input name="cancel" id="cancel0" type="radio" value="ยกเลิกบางส่วน" required="required" onclick="showContent();">
-                <label for="cancel0">ยกเลิก "บางรายการ" (กดรายการเพื่อยกเลิก)</label>
+                <input name="cancel" id="cancel0" type="radio" value="ยกเลิกบางส่วน" onclick="showContent();">
+                <label for="cancel0">ยกเลิก "บางรายการ" (กดชื่อรายการที่จะยกเลิก)</label>
                 <div id="content" style="margin-left: 50px; display: none;">
                 </div>
             </div>
             <div>
-                <input name="cancel" id="cancel1" type="radio" value="ยกเลิกทั้งหมด" required="required" onclick="hideContent();">
+                <input name="cancel" id="cancel1" type="radio" value="ยกเลิกทั้งหมด" onclick="hideContent();">
                 <label for="cancel1">ยกเลิกทั้งหมด</label>
             </div>
             <div>
@@ -57,7 +40,7 @@
             <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">? เหลือแค่ 1</span>
             <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">? หมด</span>
             <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">ร้านปิด</span>
-            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">ร้านยังไม่เปิด จะเปิด ?:00 น.</span>
+            <span name="quickReason" class="button button-warning button-space" onclick="assignText(event)">ร้านจะเปิด ?:00 น.</span>
         </div>
         <div class="row justify-content-center">
             <button name="submit" type="submit" class="button button-lg button-danger">🚫ยกเลิกออเดอร์😥</button>
@@ -96,7 +79,7 @@
             return `<span>${word}</span><br>`;
         }).join(' ');
         Array.from(content.children).forEach(child => {
-            child.addEventListener('click', function() {
+            child.addEventListener('click', function () {
                 this.classList.toggle('strikethrough');
                 if (this.classList.contains('strikethrough')) {
                     // If the class 'strikethrough' is present, add brackets
@@ -110,25 +93,31 @@
         });
     }
 
-    document.getElementById('orderCancel').addEventListener('submit', function(e) {
+    document.getElementById('orderCancel').addEventListener('submit', function (e) {
         let radioButtons = document.getElementsByName('cancel');
         let firstRadioButton = radioButtons[0];
+        let preventSubmit = false; // Track if submission should be prevented
+
+        if (!Array.from(radioButtons).some(radio => radio.checked)) {
+            preventSubmit = true;
+            swal("❌ผิดพลาด", "กรุณากดเลือกรูปแบบการยกเลิก");
+        }
 
         if (firstRadioButton.checked) {
             let content = document.getElementById('content');
-            let isStrikethrough = false;
-            Array.from(content.children).forEach(child => {
-                if (child.classList.contains('strikethrough')) {
-                    isStrikethrough = true;
-                }
-            });
+            let isStrikethrough = Array.from(content.children).some(child => child.classList.contains('strikethrough'));
 
             if (!isStrikethrough) {
-                displayErrorMsg('กรุณาระบุรายการยกเลิก');
-                e.preventDefault();
+                preventSubmit = true;
+                swal("❌ผิดพลาด", "กรุณากดเลือกรายการยกเลิก");
             }
         }
+
+        if (preventSubmit) {
+            e.preventDefault();
+        }
     });
+
 
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
@@ -144,19 +133,19 @@
             // Retrieve parameters
             //const page = params.get('page');
             //const rider = params.get('rider');
-            const list = params.get('list').replace(/[\r\n]+/gm,"|");
+            const list = params.get('list').replace(/[\r\n]+/gm, "|");
             const regex = /^(.*)\|.+(\d{5})\|/gm;
             const matched = regex.exec(list);
 
             if (matched) {
                 document.getElementById("restaurant").value = matched[1];
                 document.getElementById("orderNumber").value = matched[2];
-                document.getElementById("content").innerHTML = list.replace(matched[0],"");
+                document.getElementById("content").innerHTML = list.replace(matched[0], "");
             } else {
                 document.getElementById("content").innerHTML = "😥 ผิดพลาด ไม่พบรายการ";
             }
 
-            document.getElementById('orderCancel').action = currentActionUrl;
+            //document.getElementById('orderCancel').action = currentActionUrl;
             processContent();
         }
     };

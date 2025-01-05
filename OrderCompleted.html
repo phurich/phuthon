@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <script src="./library/utils.js"></script>
+    <html-header></html-header>
+</head>
+
+
+<body>
+    <img src="./library/logo600px.png" alt="ภูธรเดลิเวอรี่">
+    <div id="dialog-overlay" class="dialog-overlay"></div>
+    <div id="dialog-sky" class="setting-sky sky">
+        <div class="satellite"></div>
+    </div>
+    <form id="completeOrder" name="completeOrder" method="post">
+        <div class="flexRow">
+            <label class="col-5">🛵รูปแบบจัดส่ง</label>
+            <div>
+                <div>
+                    <input name="delivery" id="delivery_0" type="radio" value="มีผู้รับ" onchange="handleDeliveryChange();">
+                    <label for="delivery_0">มีผู้รับ</label>
+                </div>
+                <div>
+                    <input name="delivery" id="delivery_1" type="radio" value="วางหรือห้อยไว้" onchange="handleDeliveryChange();">
+                    <label for="delivery_1">วางหรือห้อยไว้ (แนบหลักฐานจัดส่ง)</label>
+                </div>
+            </div>
+        </div>
+        <div class="flexRow">
+            <label class="col-5">💵วิธีชำระเงิน</label>
+            <div>
+                <div>
+                    <input name="payment" id="payment_0" type="radio" onchange="document.getElementById('transferBlock').style.display= 'none';" value="เงินสดเต็มจำนวน">
+                    <label for="payment_0">เงินสด</label>
+                </div>
+                <div>
+                    <input name="payment" id="payment_1" type="radio" onchange="document.getElementById('transferBlock').style.display= 'none';" value="โอนเต็มจำนวน">
+                    <label for="payment_1">โอน</label>
+                </div>
+                <div>
+                    <input name="payment" id="payment_2" type="radio" onchange="document.getElementById('transferBlock').style.display= 'flex';document.getElementById('transfer').value = ''; document.getElementById('transfer').focus();" value="เงินสดและโอน">
+                    <label for="payment_2">เงินสดและโอน</label>
+                </div>
+            </div>
+        </div>
+        <div id="transferBlock" class="flexRow" style="display: none;">
+            <label for="transfer" class="col-5">💰ระบุยอดโอน</label>
+            <div class="col-7">
+                <input id="transfer" name="transfer" style="width: 100%" type="text" pattern="^\d[\d\.\+\-]*" value="0" aria-describedby="transferHelpBlock">
+                <span id="transferHelpBlock" class="form-text text-muted">ระบุยอดที่ลูกค้าต้องโอน</span>
+            </div>
+        </div>
+        <div class="flexRow">
+            <label for="location" class="col-5">🎯พิกัดจัดส่ง <button type="button" class="button button-info button-lg button-space" onclick="getLocation();">🛰️ขอพิกัด</button> </label>
+
+            <div class="col-7">
+                <input id="location" name="location" style="width: 100%" type="text" aria-describedby="locationHelpBlock" readonly>
+                <span id="locationHelpBlock" class="form-text text-muted">📡 เปิดฟังก์ชั่น GPS เพื่อพิกัดที่แม่นยำ 🛰️</span>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="file-input-container">
+                <label for="fileInput" id="fileLabel" class="button button-info button-lg">📸 หลักฐานจัดส่ง (jpg)</label>
+                <input type="file" id="fileInput" name="photo" accept="image/jpeg" capture="environment">
+            </div>
+        </div>
+
+        <input type="hidden" id="rider" name="rider" value="">
+        <input type="hidden" id="row" name="row" value="">
+        <input type="hidden" id="tel" name="tel" value="">
+        <canvas id="canvas" style="display:none;"></canvas>
+        <img id="photo" alt="Captured Photo" style="display:none;">
+        <div class="row justify-content-center">
+            <button name="formSubmit" type="submit" class="button button-primary button-lg">📤ส่งข้อมูล</button>
+        </div>
+        <div class="row justify-content-left">
+            <button name="previous" type="button" class="button button-warning button-lg" onclick="goToUrl();">⏪รับแล้ว💨</button>
+        </div>
+    </form>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                let queryString = decodeURIComponent(window.location.search);
+                queryString = queryString.replace("?liff.state=", "");
+
+                const params = new Proxy(new URLSearchParams(queryString), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+
+                document.getElementById("rider").value = params.rider;
+                document.getElementById("row").value = params.row;
+                document.getElementById("tel").value = params.tel;
+                document.getElementById('completeOrder').action = currentActionUrl;
+                getLocation();
+            }
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, getLocationError, { timeout: 4000, enableHighAccuracy: true });
+            } else {
+                getLocationError();
+            }
+        }
+
+        function getLocationError() {
+            document.getElementById("location").value = "กรุณาเปิดฟังก์ชั่น GPS";
+        }
+
+        function showPosition(position) {
+            if (document.getElementById("location").value === position.coords.latitude + "," + position.coords.longitude) {
+                document.getElementById('locationHelpBlock').innerText = "🎯 ยืนยันค่าพิกัดเดิม";
+            } else {
+                document.getElementById("location").value = position.coords.latitude + "," + position.coords.longitude;
+                document.getElementById('locationHelpBlock').innerText = "📡 เปิดฟังก์ชั่น GPS เพื่อพิกัดที่แม่นยำ 🛰️";
+            }
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            //console.log('Original Image Size:', file.size);
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        const canvas = document.getElementById('canvas');
+                        const context = canvas.getContext('2d', { willReadFrequently: true });
+                        const maxWidth = 800;
+
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Resize the image while keeping the aspect ratio
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        context.drawImage(img, 0, 0, width, height);
+
+                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                        const data = imageData.data;
+                        const brightness = 1.2; //Increase 20% brightness
+
+                        for (let i = 0; i < data.length; i += 4) {
+                            data[i] = data[i] * brightness;
+                            data[i + 1] = data[i + 1] * brightness;
+                            data[i + 2] = data[i + 2] * brightness;
+                        }
+
+                        context.putImageData(imageData, 0, 0);
+
+                        const compressedImageData = canvas.toDataURL('image/jpeg', 0.4); // Adjust quality here
+                        document.getElementById('photo').src = compressedImageData;
+                        document.getElementById('photo').style.display = 'block';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('completeOrder').addEventListener('submit', handleFormSubmit);
+
+        function validateForm() {
+            let errorMessage = "";
+
+            // Validate delivery method
+            const delivery = document.querySelector('input[name="delivery"]:checked');
+            if (!delivery) {
+                errorMessage += "กรุณาเลือกรูปแบบจัดส่ง\n";
+            }
+
+            // Validate payment method
+            const payment = document.querySelector('input[name="payment"]:checked');
+            if (!payment) {
+                errorMessage += "กรุณาเลือกวิธีชำระเงิน\n";
+            }
+
+            // Validate transfer amount if "เงินสดและโอน" is selected
+            if (payment && payment.id === "payment_2") {
+                const transferAmount = document.getElementById("transfer").value;
+                const transferAmountPattern = /^[+-]?(\d+(\.\d{1,2})?)([+-]\d+(\.\d+)?)*$/;
+                if (transferAmount === "" || !transferAmountPattern.test(transferAmount)) {
+                    errorMessage += "กรุณาระบุยอดโอนที่ถูกต้อง\n";
+                }
+            }
+
+            // Validate location
+            /*const location = document.getElementById("location").value;
+            if (location === "" || location === "กรุณาเปิดฟังก์ชั่น GPS") {
+                errorMessage += "กรุณาเปิดใช้งาน GPS เพื่อรับพิกัด\n";
+            }*/
+
+            // Validate photo for "วางหรือห้อยไว้" delivery
+            if (document.getElementById("delivery_1").checked) {
+                const fileInput = document.getElementById('fileInput');
+                if (fileInput.files.length === 0) {
+                    errorMessage += "กรุณาแนบหลักฐานจัดส่ง";
+                }
+            }
+
+            // Display error messages
+            if (errorMessage) {
+                swalShowError(errorMessage);
+                return false; // Prevent form submission
+            }
+
+            return true; // Form is valid
+        }
+
+        function handleDeliveryChange() {
+            const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
+            const paymentOption = document.getElementById("payment_1"); //โอน
+
+            if (deliveryOption === document.getElementById("delivery_1").value) {
+                paymentOption.checked = true;
+                document.getElementById('transferBlock').style.display = 'none';
+            }
+        }
+
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // Always prevent the default form submission
+
+            if (!validateForm()) {
+                document.getElementsByName('formSubmit')[0].disabled = false;
+                return false;
+            }
+
+            if (document.getElementById("delivery_1").checked) {
+
+                document.getElementsByName('formSubmit')[0].disabled = true;
+                document.getElementById('dialog-sky').style.display = 'block';
+                document.getElementById('dialog-overlay').style.display = 'block';
+
+                const success = await uploadToImgBB("Deli-");
+
+                if (!success) {
+                    document.getElementById('dialog-sky').style.display = 'none';
+                    document.getElementById('dialog-overlay').style.display = 'none';
+                    swal({
+                        title: 'อัพโหลดภาพล้มเหลว',
+                        text: "ไม่มีปัญหา😅 ระบบบันทึกข้อมูลเรียบร้อย กรุณาส่งภาพทางไลน์",
+                        icon: 'warning'
+                    }).then(
+                        function () {
+                            document.getElementById('completeOrder').submit();
+                        }
+                    )
+                }
+            }
+
+            document.getElementById('completeOrder').submit();
+        }
+
+        function goToUrl() {
+            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value;
+            var url = "https://liff.line.me/1656261439-JzOM5yZ6?" + taskParam;
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>
