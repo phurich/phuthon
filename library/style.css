@@ -1,0 +1,407 @@
+body, text, textarea, .button-lg, .tooltip-inner {
+    font-family: "Kanit", Sans-Serif !important;
+    font-size: x-large !important;
+}
+
+span {
+    font-size: x-large;
+}
+
+/*.stack {
+    max-width: 100%;
+    flex: auto;
+    padding-top: 5px;
+}*/
+
+input[type=radio], input[type=checkbox] {
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+}
+
+label {
+    padding-right: 10px;
+    font-size: x-large;
+    width: auto;
+}
+
+input {
+    border-width: 1px;
+    font-size: large;
+    font-family: 'Kanit';
+}
+
+.label-textarea {
+    display: flex;
+    align-items: flex-start;
+    align-items: baseline;
+    /*margin-bottom: 20px;*/
+}
+
+.form-check-inline {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: 0;
+    margin-right: .75rem;
+}
+
+.glyphicon {
+    font-size: x-large;
+}
+
+.form-control {
+    font-size: x-large !important;
+    height: 44px !important;
+    min-width: 20vw;
+}
+
+.button-default {
+    background-color: #eee !important;
+    height: 60px;
+}
+
+.checkbox {
+    padding-left: 10px;
+}
+
+.justify-content-left {
+    display: flex;
+    justify-content: left;
+}
+
+.justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.justify-content-right {
+    display: flex;
+    justify-content: right;
+}
+
+.button-space {
+    margin-left: 30px;
+}
+
+.button-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.button-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.button-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.button-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.button {
+    padding: 6px 12px;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
+
+#errorMsg {
+    background-color: #ffdddd;
+    border: 2px solid red;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 10px;
+}
+
+/* Grid System */
+.row {
+    margin: 10px 0px 10px 0px;
+    padding-block: 10px;
+}
+
+.flexRow {
+    margin: 10px 0px 10px 0px;
+    padding-block: 10px;
+    display: flex;
+}
+
+.col-5 {
+    flex: 0 0 30%;
+    max-width: 30%;
+}
+
+.col-7 {
+    flex: 0 0 65%;
+    max-width: 65%;
+}
+
+/* Form Text */
+.form-text {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #6c757d;
+    /* Similar to text-muted */
+}
+
+/* Text Muted */
+.text-muted {
+    color: #6c757d !important;
+}
+
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    /* Change the cursor to indicate the button is not clickable */
+}
+
+.file-input-container {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+}
+
+#fileInput {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.swal-text {
+    font-size: 24px;
+}
+
+.custom-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    width: 80%;
+    z-index: 1000;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+.dialog-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.dialog-content {
+    margin-bottom: 10px;
+}
+
+.setting-sky {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+}
+
+.sky {
+    width: 320px;
+    /* Doubled the width */
+    height: 160px;
+    /* Doubled the height */
+    background: radial-gradient(circle 100px at top right, #ffd738 40%, #0000),
+        #4dbefa;
+    /*position: relative;*/
+    overflow: hidden;
+}
+
+.sky:before,
+.sky:after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 320px;
+    /* Start from the right border */
+    width: 72px;
+    height: 40px;
+    --c: radial-gradient(farthest-side, #fff 96%, #0000);
+    background:
+        var(--c) 100% 100% /30% 60%,
+        var(--c) 70% 0 /50% 100%,
+        var(--c) 0 100% /36% 68%,
+        var(--c) 27% 18% /26% 40%,
+        linear-gradient(#fff 0 0) bottom/67% 58%;
+    background-repeat: no-repeat;
+}
+
+.sky:before {
+    top: 20%;
+    animation: l10a 5s linear infinite;
+    /* First cloud with slower speed */
+}
+
+.sky:after {
+    top: 50%;
+    --l: -320px;
+    /* Adjust for the new width */
+    animation: l10b 3s linear infinite;
+    /* Second cloud with faster speed */
+}
+
+@keyframes l10a {
+    100% {
+        left: -320px;
+        /* Adjust for the new width */
+    }
+}
+
+@keyframes l10b {
+    100% {
+        left: var(--l, -320px);
+        /* Adjust for the new width */
+    }
+}
+
+.satellite {
+    width: 140px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    /* Center vertically */
+    left: 50%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%) scaleX(-1);
+    /* Center and flip horizontally */
+}
+
+.satellite:before {
+    content: "🛰️";
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*.setting-sky {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+}
+
+.sky {
+    width: 160px;
+    height: 80px;
+    background:
+        radial-gradient(circle 50px at top right, #ffd738 40%, #0000),
+        #4dbefa;
+    overflow: hidden;
+}
+
+.sky:before,
+.sky:after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 160px;
+    width: 72px;
+    height: 40px;
+    --c: radial-gradient(farthest-side, #fff 96%, #0000);
+    background:
+        var(--c) 100% 100% /30% 60%,
+        var(--c) 70% 0 /50% 100%,
+        var(--c) 0 100% /36% 68%,
+        var(--c) 27% 18% /26% 40%,
+        linear-gradient(#fff 0 0) bottom/67% 58%;
+    background-repeat: no-repeat;
+    animation: l10 3s linear infinite;
+}
+
+.sky:after {
+    top: 30px;
+    --l: -200%;
+}
+
+@keyframes l10 {
+    100% {
+        left: var(--l, -100%);
+    }
+}
+
+.satellite {
+    width: 140px;
+    height: 60px;
+    position: absolute;
+    top: 30px;
+    left: -50px;
+    transform: scaleX(-1);
+}
+
+.satellite:before {
+    content: "🛰️";
+    font-size: 60px;
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+}*/
