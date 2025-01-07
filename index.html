@@ -4,6 +4,7 @@
 <head>
     <script src="./library/utils.js"></script>
     <!-- CSS files -->
+    <link rel="stylesheet" href="https://phurich.github.io/phuthon/library/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
 
@@ -95,7 +96,7 @@
         <div class="form-group row">
             <label>⏱ ตั้งเวลาส่งงานให้ไรเดอร์</label>
             <select name="timeDelay" id="timeDelay">
-                <option value="">ทันที</option>
+                <option value="10s">ทันที</option>
                 <option value="10m">10 นาที</option>
                 <option value="20m">20 นาที</option>
                 <option value="30m">30 นาที</option>
@@ -167,6 +168,7 @@
             <div>
                 <ul>
                     <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว)');">(🎉สั่งร้านแล้ว)</span></li>
+                    <li><span onclick="insertAtCursor('detailArea',' (☎️ลูกค้าสั่งทางโทรศัพท์ / 🚫ไม่มีไลน์)');">☎️ลูกค้าสั่งทางโทรศัพท์</span></li>
                     <li><span onclick="insertAtCursor('detailArea',' (🎉สั่งร้านแล้ว / 💵จ่ายร้านแล้ว)');">(💵สั่งร้านแล้ว/จ่ายร้านแล้ว)</span></li>
                     <li><span onclick="insertAtCursor('detailArea',' 🏪ร้านไหนก็ได้');">🏪ร้านไหนก็ได้</span></li>
                     <li><span onclick="insertAtCursor('detailArea',' 🛵ส่งเลย ผู้สั่งจะโอนทีหลัง');">🛵ส่งเลย ผู้สั่งจะโอนทีหลัง</span></li>
