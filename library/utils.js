@@ -1,5 +1,5 @@
 var testActionUrl = "https://script.google.com/macros/s/AKfycbyzL2u8HZ8eviN4Ma7qyks0AfEGXnwStwddbgwDQ5Ds/dev";
-var currentActionUrl = "https://script.google.com/macros/s/AKfycbzmS6MigtAPl9gqFdPTc9QDiQ0xL5TR3kVfx01Cl7L51UKCWyyRWHKkPVgZVEpg_b697A/exec";
+var currentActionUrl = "https://script.google.com/macros/s/AKfycbzPuIJRDAlKg2a2hE7E7sVL9VOx5lFNJesO9uUxPaezEdec4Itx9kn5y4Ya5A8mxOtjhQ/exec";
 
 class myHtmlHeader extends HTMLElement {
     async connectedCallback() {
