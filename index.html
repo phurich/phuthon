@@ -67,7 +67,11 @@
 
 <body>
     <img src="./library/logo600px.png" alt="ภูธรเดลิเวอรี่">
-    <form id="assignRider" style="margin: 20px;" onsubmit="return validateForm();" method="post">
+    <div id="dialog-overlay" class="dialog-overlay"></div>
+    <div id="dialog-sky" class="setting-sky sky">
+        <div class="satellite"></div>
+    </div>
+    <form id="assignRider" name="assignRider" style="margin: 20px;" method="post" accept-charset="UTF-8">
         <div class="form-group row">
             <label>🛵ไรเดอร์💨</label>
             <div class="form-check-inline">
@@ -95,7 +99,7 @@
         </div>
         <div class="form-group row">
             <label>⏱ ตั้งเวลาส่งงานให้ไรเดอร์</label>
-            <select name="timeDelay" id="timeDelay">
+            <select title="setTimeDelay" name="timeDelay" id="timeDelay">
                 <option value="10s">ทันที</option>
                 <option value="10m">10 นาที</option>
                 <option value="20m">20 นาที</option>
@@ -187,9 +191,22 @@
             <textarea style="width: 100%" id="address" name="address" rows="4" maxlength="900" placeholder="ระบุข้อมูลการจัดส่ง เบอร์โทร และพิกัดในรูปแบบ Google Pluscode URL"></textarea>
         </div>
         <div class="row justify-content-center">
-            <button name="submit" type="submit" class="button button-lg button-primary">🛵 ส่งงาน</button>
+            <div class="file-input-container">
+                <label for="fileInput" id="fileLabel" class="button button-info button-lg">📎 แนบรูปให้ไรเดอร์ (jpg)</label>
+                <input type="file" id="fileInput" name="photo" accept="image/jpeg" capture="environment" multiple>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <canvas id="canvas" style="display:none;"></canvas>
+            <img id="photo" alt="Captured Photo" style="display:none;">
+        </div>
+        <input type="hidden" id="rider" name="rider" value="">
+        <input type="hidden" id="row" name="row" value="">
+        <input type="hidden" id="imageURL" name="imageURL" value="">
+        <div class="row justify-content-center">
+            <button name="formSubmit" type="submit" class="button button-lg button-primary">🛵 ส่งงาน</button>
             <button name="reset" type="reset" class="button button-lg button-danger button-space">🧹 รีเซ็ท</button>
-            <button name="toggle" type="button" class="button button-lg button-warning button-space" onclick="document.getElementsByName('submit')[0].disabled = false;">🔁</button>
+            <button name="toggle" type="button" class="button button-lg button-warning button-space" onclick="document.getElementsByName('formSubmit')[0].disabled = false;">🔁</button>
         </div>
     </form>
     <script>
@@ -228,7 +245,7 @@
         $('#add-to-textbox').click(function () {
             let selectedOptions = $('#restaurantList option:selected');
             let index = 0;
-            let orderNumber = createOrderNumber();
+            let orderNumber = "ออเดอร์#" + createOrderNumber();
             $('#textareas').empty(); // Clear the existing textareas
             selectedOptions.each(function () {
                 let label = $(this).text().trim();
@@ -265,7 +282,9 @@
             setTimeout(function () {
                 $('select').multiselect('refresh');
                 $('#textareas').empty(); // Clear the dynamically added textareas
-                document.getElementsByName('submit')[0].disabled = false;
+                document.getElementsByName('formSubmit')[0].disabled = false;
+                document.getElementById('photo').src = "";
+                document.getElementById('photo').style.display = 'none';
             }, 500);
         });
 
@@ -301,9 +320,21 @@
             let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
             // Convert to a string and pad with leading zeros if necessary
-            let orderNumber = "ออเดอร์#" + totalSeconds.toString().padStart(5, '0');
+            let orderNumber = totalSeconds.toString().padStart(5, '0');
 
             return orderNumber;
+        }
+
+        function getChosenRiderName() {
+            const selectedRadio = document.querySelector('input[name="rider"]:checked');
+
+            if (selectedRadio) {
+                const value = selectedRadio.value;
+                const name = value.split("|")[0];
+                return name;
+            } else {
+                return ""; // Or an empty string, depending on your preference
+            }
         }
 
         function validateForm() {
@@ -401,9 +432,45 @@
                 return false;  // Stop form submission
             }
 
-            document.getElementsByName('submit')[0].disabled = true;
-            //alert('Sent');
+            //To use as image name
+            document.getElementById("rider").value = getChosenRiderName();
+            document.getElementById("row").value = createOrderNumber();
             return true;  // Allow form submission if validation passes
+        }
+
+        document.getElementById('fileInput').addEventListener('change', mergeImagesVertically);
+
+        document.getElementById('assignRider').addEventListener('submit', handleFormSubmit);
+
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // Always prevent the default form submission
+            document.getElementsByName('formSubmit')[0].disabled = true;
+
+            if (!validateForm()) {
+                document.getElementsByName('formSubmit')[0].disabled = false;
+                return false;
+            }
+
+            document.getElementById('dialog-sky').style.display = 'block';
+            document.getElementById('dialog-overlay').style.display = 'block';
+
+            const success = await uploadToImgBB("Admin-");
+
+            if (!success) {
+                document.getElementById('dialog-sky').style.display = 'none';
+                document.getElementById('dialog-overlay').style.display = 'none';
+                swal({
+                    title: 'อัพโหลดภาพล้มเหลว',
+                    text: "ไม่มีปัญหา😅 ระบบส่งงานเรียบร้อย กรุณาส่งภาพทางไลน์",
+                    icon: 'warning'
+                }).then(
+                    function () {
+                        document.getElementById('assignRider').submit();
+                    }
+                )
+            }
+
+            document.getElementById('assignRider').submit();
         }
     </script>
 </body>
