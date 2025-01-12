@@ -151,12 +151,13 @@
 
             const success = await uploadToImgBB("Buy-");
 
+            document.getElementById('dialog-sky').style.display = 'none';
+            document.getElementById('dialog-overlay').style.display = 'none';
+
             if (!success) {
-                document.getElementById('dialog-sky').style.display = 'none';
-                document.getElementById('dialog-overlay').style.display = 'none';
                 swal({
                     title: 'อัพโหลดภาพล้มเหลว',
-                    text: "ไม่มีปัญหา😅 ระบบบันทึกข้อมูลเรียบร้อย กรุณาส่งภาพทางไลน์",
+                    text: 'ไม่มีปัญหา😅 ระบบบันทึกข้อมูลเรียบร้อย กรุณาส่งภาพทางไลน์',
                     icon: 'warning'
                 }).then(
                     function () {

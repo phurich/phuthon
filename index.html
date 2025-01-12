@@ -451,15 +451,17 @@
                 return false;
             }
 
-            document.getElementById('dialog-sky').style.display = 'block';
-            document.getElementById('dialog-overlay').style.display = 'block';
-
             if (document.getElementById('fileInput').files.length > 0) {
+
+                document.getElementById('dialog-sky').style.display = 'block';
+                document.getElementById('dialog-overlay').style.display = 'block';
+
                 const success = await uploadToImgBB("Admin-");
 
+                document.getElementById('dialog-sky').style.display = 'none';
+                document.getElementById('dialog-overlay').style.display = 'none';
+
                 if (!success) {
-                    document.getElementById('dialog-sky').style.display = 'none';
-                    document.getElementById('dialog-overlay').style.display = 'none';
                     swal({
                         title: 'อัพโหลดภาพล้มเหลว',
                         text: 'ไม่มีปัญหา😅 ระบบส่งงานเรียบร้อย กรุณาส่งภาพทางไลน์',
@@ -472,8 +474,6 @@
                 }
             }
 
-            document.getElementById('dialog-sky').style.display = 'none';
-            document.getElementById('dialog-overlay').style.display = 'none';
             document.getElementById('assignRider').submit();
         }
     </script>
