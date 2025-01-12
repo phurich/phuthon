@@ -454,21 +454,25 @@
             document.getElementById('dialog-sky').style.display = 'block';
             document.getElementById('dialog-overlay').style.display = 'block';
 
-            const success = await uploadToImgBB("Admin-");
+            if (document.getElementById('fileInput').files.length > 0) {
+                const success = await uploadToImgBB("Admin-");
 
-            if (!success) {
-                document.getElementById('dialog-sky').style.display = 'none';
-                document.getElementById('dialog-overlay').style.display = 'none';
-                swal({
-                    title: 'อัพโหลดภาพล้มเหลว',
-                    text: "ไม่มีปัญหา😅 ระบบส่งงานเรียบร้อย กรุณาส่งภาพทางไลน์",
-                    icon: 'warning'
-                }).then(
-                    function () {
-                        document.getElementById('assignRider').submit();
-                    }
-                )
+                if (!success) {
+                    document.getElementById('dialog-sky').style.display = 'none';
+                    document.getElementById('dialog-overlay').style.display = 'none';
+                    swal({
+                        title: 'อัพโหลดภาพล้มเหลว',
+                        text: 'ไม่มีปัญหา😅 ระบบส่งงานเรียบร้อย กรุณาส่งภาพทางไลน์',
+                        icon: 'warning'
+                    }).then(
+                        function () {
+                            document.getElementById('assignRider').submit();
+                        }
+                    )
+                }
             }
+
+            document.getElementById('assignRider').submit();
         }
     </script>
 </body>
