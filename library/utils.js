@@ -1,5 +1,5 @@
 var testActionUrl = "https://script.google.com/macros/s/AKfycbyzL2u8HZ8eviN4Ma7qyks0AfEGXnwStwddbgwDQ5Ds/dev";
-var currentActionUrl = "https://script.google.com/macros/s/AKfycby755epnbj2CT58u_xiF_plaz7HglheUciuPgQXQFye2jqO90P2Kbdhah37ncUE1l2-dg/exec";
+var currentActionUrl = "https://script.google.com/macros/s/AKfycbwZDZolFm3VmGbBRlh-p2qy9-50x-A-4kIMY4l9G7XxGOJrpBiSjUxO24mbfrZ9CuywVQ/exec";
 
 class myHtmlHeader extends HTMLElement {
     async connectedCallback() {
@@ -39,32 +39,6 @@ class myHtmlHeader extends HTMLElement {
             script.onerror = reject;
             document.head.appendChild(script);
         });
-    }
-}
-
-async function uploadToImgBB(prefix) {
-    const formData = new FormData();
-    const base64data = document.getElementById('photo').src.split(',')[1];
-    const imageName = `${prefix}${document.getElementById("rider").value}${document.getElementById("row").value}`;
-
-    formData.append('image', base64data);
-    formData.append('name', imageName);
-
-    try {
-        const response = await fetch('https://api.imgbb.com/1/upload?key=3f7f239d1e23ab442c07056617c998e8', {
-            method: 'POST',
-            body: formData
-        });
-        if (!response.ok) {
-            console.log('Error:', response.status, response.statusText);
-            throw new Error('Network response was not ok');
-        }
-        const responseData = await response.json();
-        document.getElementById("imageURL").value = responseData.data.url;
-        return true;
-    } catch (error) {
-        console.error('There was a problem with the upload operation:', error);
-        return false;
     }
 }
 
@@ -166,6 +140,7 @@ async function mergeImagesVertically() {
         // Generate and display the image only if files were selected
         const compressedImageData = canvas.toDataURL('image/jpeg', 0.4);
         document.getElementById('photo').src = compressedImageData;
+        document.getElementById('imageBase64').value = document.getElementById('photo').src.split(',')[1];
         document.getElementById('photo').style.display = 'block';
     }
 }
