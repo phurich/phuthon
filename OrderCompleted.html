@@ -71,7 +71,8 @@
         <input type="hidden" id="rider" name="rider" value="">
         <input type="hidden" id="row" name="row" value="">
         <input type="hidden" id="tel" name="tel" value="">
-        <input type="hidden" id="imageURL" name="imageURL" value="">
+        <input type="hidden" id="imageName" name="imageName" value="">
+        <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <canvas id="canvas" style="display:none;"></canvas>
         <img id="photo" alt="Captured Photo" style="display:none;">
         <div class="row justify-content-center">
@@ -191,29 +192,9 @@
                 return false;
             }
 
-            if (document.getElementById("delivery_1").checked) {
-
-                document.getElementById('dialog-sky').style.display = 'block';
-                document.getElementById('dialog-overlay').style.display = 'block';
-
-                const success = await uploadToImgBB("Deli-");
-
-                document.getElementById('dialog-sky').style.display = 'none';
-                document.getElementById('dialog-overlay').style.display = 'none';
-
-                if (!success) {
-                    swal({
-                        title: 'อัพโหลดภาพล้มเหลว',
-                        text: 'ไม่มีปัญหา😅 ระบบบันทึกข้อมูลเรียบร้อย กรุณาส่งภาพทางไลน์',
-                        icon: 'warning'
-                    }).then(
-                        function () {
-                            document.getElementById('completeOrder').submit();
-                        }
-                    )
-                }
-            }
-
+            document.getElementById('dialog-sky').style.display = 'block';
+            document.getElementById('dialog-overlay').style.display = 'block';
+            document.getElementById('imageName').value = `Deli-${document.getElementById('rider').value}${document.getElementById('row').value}`;
             document.getElementById('completeOrder').submit();
         }
 

@@ -101,7 +101,9 @@
             <label>⏱ ตั้งเวลาส่งงานให้ไรเดอร์</label>
             <select title="setTimeDelay" name="timeDelay" id="timeDelay">
                 <option value="10s">ทันที</option>
+                <option value="5m">5 นาที</option>
                 <option value="10m">10 นาที</option>
+                <option value="15m">15 นาที</option>
                 <option value="20m">20 นาที</option>
                 <option value="30m">30 นาที</option>
                 <option value="40m">40 นาที</option>
@@ -200,9 +202,8 @@
             <canvas id="canvas" style="display:none;"></canvas>
             <img id="photo" alt="Captured Photo" style="display:none;">
         </div>
-        <input type="hidden" id="rider" name="rider" value="">
-        <input type="hidden" id="row" name="row" value="">
-        <input type="hidden" id="imageURL" name="imageURL" value="">
+        <input type="hidden" id="imageName" name="imageName" value="">
+        <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <div class="row justify-content-center">
             <button name="formSubmit" type="submit" class="button button-lg button-primary">🛵 ส่งงาน</button>
             <button name="reset" type="reset" class="button button-lg button-danger button-space">🧹 รีเซ็ท</button>
@@ -284,9 +285,17 @@
                 $('#textareas').empty(); // Clear the dynamically added textareas
                 document.getElementsByName('formSubmit')[0].disabled = false;
                 document.getElementById('photo').src = "";
-                document.getElementById('imageURL').value = "";
+                document.getElementById("imageName").value = "";
+                document.getElementById('imageBase64').value = "";
                 document.getElementById('photo').style.display = 'none';
             }, 500);
+        });
+
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                document.getElementById('dialog-sky').style.display = 'none';
+                document.getElementById('dialog-overlay').style.display = 'none';
+            }
         });
 
         function insertAtCursor(id, myValue) {
@@ -433,9 +442,6 @@
                 return false;  // Stop form submission
             }
 
-            //To use as image name
-            document.getElementById("rider").value = getChosenRiderName();
-            document.getElementById("row").value = createOrderNumber();
             return true;  // Allow form submission if validation passes
         }
 
@@ -452,29 +458,9 @@
                 return false;
             }
 
-            if (document.getElementById('fileInput').files.length > 0) {
-
-                document.getElementById('dialog-sky').style.display = 'block';
-                document.getElementById('dialog-overlay').style.display = 'block';
-
-                const success = await uploadToImgBB("Admin-");
-
-                document.getElementById('dialog-sky').style.display = 'none';
-                document.getElementById('dialog-overlay').style.display = 'none';
-
-                if (!success) {
-                    swal({
-                        title: 'อัพโหลดภาพล้มเหลว',
-                        text: 'ไม่มีปัญหา😅 ระบบส่งงานเรียบร้อย กรุณาส่งภาพทางไลน์',
-                        icon: 'warning'
-                    }).then(
-                        function () {
-                            document.getElementById('assignRider').submit();
-                        }
-                    )
-                }
-            }
-
+            document.getElementById('dialog-sky').style.display = 'block';
+            document.getElementById('dialog-overlay').style.display = 'block';
+            document.getElementById("imageName").value = "Admin-" + getChosenRiderName() + createOrderNumber();
             document.getElementById('assignRider').submit();
         }
     </script>

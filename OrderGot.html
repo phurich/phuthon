@@ -56,7 +56,8 @@
         </div>
         <input type="hidden" id="rider" name="rider" value="">
         <input type="hidden" id="row" name="row" value="">
-        <input type="hidden" id="imageURL" name="imageURL" value="">
+        <input type="hidden" id="imageName" name="imageName" value="">
+        <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <canvas id="canvas" style="display:none;"></canvas>
         <img id="photo" alt="Captured Photo" style="display:none;">
         <div class="row justify-content-center">
@@ -148,25 +149,8 @@
 
             document.getElementById('dialog-sky').style.display = 'block';
             document.getElementById('dialog-overlay').style.display = 'block';
-
-            const success = await uploadToImgBB("Buy-");
-
-            document.getElementById('dialog-sky').style.display = 'none';
-            document.getElementById('dialog-overlay').style.display = 'none';
-
-            if (!success) {
-                swal({
-                    title: 'อัพโหลดภาพล้มเหลว',
-                    text: 'ไม่มีปัญหา😅 ระบบบันทึกข้อมูลเรียบร้อย กรุณาส่งภาพทางไลน์',
-                    icon: 'warning'
-                }).then(
-                    function () {
-                        document.getElementById('getOrder').submit();
-                    }
-                )
-            } else {
-                document.getElementById('getOrder').submit();
-            }
+            document.getElementById('imageName').value = `Buy-${document.getElementById('rider').value}${document.getElementById('row').value}`;
+            document.getElementById('getOrder').submit();
         }
 
         function goToUrl() {
