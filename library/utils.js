@@ -1,5 +1,5 @@
 var testActionUrl = "https://script.google.com/macros/s/AKfycbyzL2u8HZ8eviN4Ma7qyks0AfEGXnwStwddbgwDQ5Ds/dev";
-var currentActionUrl = "https://script.google.com/macros/s/AKfycbx_zV4Xt6HBRCknhtqs8F88BHX2wBiKIHSXCo_ARMEyGV8gWIc9anM8SECtBa6kfuYXjA/exec";
+var currentActionUrl = "https://script.google.com/macros/s/AKfycby-EUnnpYtvoXei1NnB5n4wtMGjotUgH_BpNboR-IvGBWn0Wq6ygcwBrHmpSQ51GzWo6Q/exec";
 
 class myHtmlHeader extends HTMLElement {
     async connectedCallback() {
@@ -26,6 +26,33 @@ class myHtmlHeader extends HTMLElement {
 
         window.swalShowSuccess = function (message) {
             swal("สำเร็จ", message, "success");
+        };
+
+
+        window.swalShowWarning = function (title,message) {
+            return swal({
+                title: title,
+                text: message,
+                icon: "warning",
+                buttons: {
+                    confirm: {
+                        text: "ถูกแล้ว",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    },
+                    cancel: {
+                        text: "ยกเลิก",
+                        value: false,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    }
+                }
+            }).then((value) => {
+                return value; // true if OK, false if Cancel
+            });
         };
 
         this.remove();
