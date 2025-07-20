@@ -18,7 +18,7 @@
             <label for="purchase" class="col-5">💵ค่าจัดซื้อ</label>
             <div class="col-7">
                 <input id="purchase" name="purchase" style="width: 100%" pattern="^\d[\d\.\+\-]*" placeholder="40+50 หรือ 90" type="text" aria-describedby="purchaseHelpBlock">
-                <span id="purchaseHelpBlock" class="form-text text-muted">🧙‍♂️ หากระบุ 50+50 ระบบจะรวมยอดให้อัตโนมัติ</span>
+                <span id="purchaseHelpBlock" class="form-text text-muted">🧙‍♂️ เช่น 10+20+30 ระบบจะรวมยอดให้อัตโนมัติ</span>
             </div>
         </div>
         <div class="flexRow">
@@ -56,6 +56,9 @@
         </div>
         <input type="hidden" id="rider" name="rider" value="">
         <input type="hidden" id="row" name="row" value="">
+        <input type="hidden" id="foundPhoto" name="foundPhoto" value="false">
+        <input type="hidden" id="foundBulk" name="foundBulk" value="false">
+        <input type="hidden" id="foundDiscount" name="foundDiscount" value="false">
         <input type="hidden" id="imageName" name="imageName" value="">
         <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <canvas id="canvas" style="display:none;"></canvas>
@@ -67,6 +70,7 @@
             <button name="next" type="button" class="button button-warning button-lg" onclick="goToUrl();">🛵ส่งแล้ว⏩</button>
         </div>
     </form>
+
     <script>
         document.onreadystatechange = () => {
             if (document.readyState === "complete") {
@@ -78,6 +82,9 @@
                 document.getElementById("rider").value = params.rider;
                 document.getElementById("row").value = params.row;
                 document.getElementById("tel").value = params.tel;
+                document.getElementById("foundPhoto").value = params.photo;
+                document.getElementById("foundBulk").value = params.bulk;
+                document.getElementById("foundDiscount").value = params.discount;
                 document.getElementById('getOrder').action = currentActionUrl;
                 //document.getElementById('getOrder').action = testActionUrl;
             }
@@ -93,6 +100,9 @@
             const delivery = document.getElementById('delivery').value;
             const discount = document.getElementById('discount').value;
             const tel = document.getElementById('tel').value;
+            const foundPhoto = document.getElementById('foundPhoto').value;
+            const foundBulk = document.getElementById('foundBulk').value;
+            const foundDiscount = document.getElementById('foundDiscount').value;
             const fileInput = document.getElementById('fileInput');
 
             // Regular expressions for validation
@@ -135,6 +145,33 @@
                 return false; // Prevent form submission
             }
 
+            if (foundPhoto) {
+                swalShowWarning("📸 พบคำร้องขอถ่ายภาพสินค้า", "ระบุค่าบริการถูกต้องแล้ว?")
+                    .then((confirmed) => {
+                        if (!confirmed) {
+                            return false;
+                        }
+                    });
+            }
+
+            if (foundBulk) {
+                swalShowWarning("📦 เป็นสินค้ายกลัง/กระสอบ? หรือ ใหญ่กว่ากระเป๋า?", "ระบุค่าบริการถูกต้องแล้ว?")
+                    .then((confirmed) => {
+                        if (!confirmed) {
+                            return false;
+                        }
+                    });
+            }
+
+            if (foundDiscount) {
+                swalShowWarning("💲 ร้านอาจมีการให้ส่วนลดแก่ภูธร", "ระบุส่วนลดภูธรถูกต้องแล้ว?")
+                    .then((confirmed) => {
+                        if (!confirmed) {
+                            return false;
+                        }
+                    });
+            }
+
             return true; // Form is valid
         }
 
@@ -154,7 +191,7 @@
         }
 
         function goToUrl() {
-            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value;
+            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value + "&photo=" + document.getElementById("foundPhoto").value + "&bulk=" + document.getElementById("foundBulk").value + "&discount=" + document.getElementById("foundDiscount").value;
             var url = "https://liff.line.me/1656261439-bwOVyD2R?" + taskParam;
             window.location.href = url;
         }
