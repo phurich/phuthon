@@ -94,7 +94,7 @@
 
         document.getElementById('getOrder').addEventListener('submit', handleFormSubmit);
 
-        function validateForm() {
+        async function validateForm() {
             // Get all input fields
             const purchase = document.getElementById('purchase').value;
             const delivery = document.getElementById('delivery').value;
@@ -145,31 +145,27 @@
                 return false; // Prevent form submission
             }
 
-            if (foundPhoto) {
-                swalShowWarning("📸 พบคำร้องขอถ่ายภาพสินค้า", "ระบุค่าบริการถูกต้องแล้ว?")
-                    .then((confirmed) => {
-                        if (!confirmed) {
-                            return false;
-                        }
-                    });
+            // Handle asynchronous warnings and act on their confirmation
+            // Ensure you're comparing to string 'true' if it's from params
+            if (foundPhoto === 'true') {
+                const confirmed = await swalShowWarning("📸 พบคำร้องขอถ่ายภาพสินค้า", "ระบุค่าบริการถูกต้องแล้ว?");
+                if (!confirmed) { // If user clicked 'Cancel' (value is false)
+                    return false; // Stop validation and prevent form submission
+                }
             }
 
-            if (foundBulk) {
-                swalShowWarning("📦 เป็นสินค้ายกลัง/กระสอบ? หรือ ใหญ่กว่ากระเป๋า?", "ระบุค่าบริการถูกต้องแล้ว?")
-                    .then((confirmed) => {
-                        if (!confirmed) {
-                            return false;
-                        }
-                    });
+            if (foundBulk === 'true') {
+                const confirmed = await swalShowWarning("📦 เป็นสินค้ายกลัง/กระสอบ? หรือ ใหญ่กว่ากระเป๋า?", "ระบุค่าบริการถูกต้องแล้ว?");
+                if (!confirmed) { // If user clicked 'Cancel'
+                    return false; // Stop validation and prevent form submission
+                }
             }
 
-            if (foundDiscount) {
-                swalShowWarning("💲 ร้านอาจมีการให้ส่วนลดแก่ภูธร", "ระบุส่วนลดภูธรถูกต้องแล้ว?")
-                    .then((confirmed) => {
-                        if (!confirmed) {
-                            return false;
-                        }
-                    });
+            if (foundDiscount === 'true') {
+                const confirmed = await swalShowWarning("⏬ ร้านอาจมีการให้ส่วนลดแก่ภูธร", "ระบุส่วนลดภูธรถูกต้องแล้ว?");
+                if (!confirmed) { // If user clicked 'Cancel'
+                    return false; // Stop validation and prevent form submission
+                }
             }
 
             return true; // Form is valid
@@ -179,11 +175,15 @@
             event.preventDefault(); // Always prevent the default form submission
             document.getElementsByName('formSubmit')[0].disabled = true;
 
-            if (!validateForm()) {
+            // Await the result of validateForm
+            const isValid = await validateForm(); // Now we wait for it to resolve to true/false
+
+            if (!isValid) { // Check the actual boolean result
                 document.getElementsByName('formSubmit')[0].disabled = false;
-                return false;
+                return false; // Prevent further execution in handleFormSubmit
             }
 
+            // If isValid is true, proceed with submission
             document.getElementById('dialog-sky').style.display = 'block';
             document.getElementById('dialog-overlay').style.display = 'block';
             document.getElementById('imageName').value = `Buy-${document.getElementById('rider').value}${document.getElementById('row').value}`;
