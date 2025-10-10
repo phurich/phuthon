@@ -23,8 +23,12 @@
                     <label for="delivery_0">มีผู้รับ</label>
                 </div>
                 <div>
-                    <input name="delivery" id="delivery_1" type="radio" value="วางหรือห้อยไว้" onchange="handleDeliveryChange();">
-                    <label for="delivery_1">วางหรือห้อยไว้ (แนบหลักฐานจัดส่ง)</label>
+                    <input name="delivery" id="delivery_1" type="radio" value="วางหรือห้อย (🚫ผู้รับไม่ทราบ)" onchange="handleDeliveryChange();">
+                    <label for="delivery_1">วางหรือห้อย (🚫ผู้รับไม่ทราบ)</label>
+                </div>
+                <div>
+                    <input name="delivery" id="delivery_2" type="radio" value="วางหรือห้อย (📞ผู้รับทราบแล้ว)" onchange="handleDeliveryChange();">
+                    <label for="delivery_2">วางหรือห้อย (📞ผู้รับทราบแล้ว)</label>
                 </div>
             </div>
         </div>
@@ -183,7 +187,7 @@
             const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
             const paymentOption = document.getElementById("payment_1"); //โอน
 
-            if (deliveryOption === document.getElementById("delivery_1").value) {
+            if (deliveryOption !== document.getElementById("delivery_0").value) {
                 paymentOption.checked = true;
                 document.getElementById('transferBlock').style.display = 'none';
             }
