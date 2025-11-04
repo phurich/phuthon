@@ -167,7 +167,7 @@
             }*/
 
             // Validate photo for "วางหรือห้อยไว้" delivery
-            if (document.getElementById("delivery_1").checked) {
+            if (!document.getElementById("delivery_0").checked) {
                 const fileInput = document.getElementById('fileInput');
                 if (fileInput.files.length === 0) {
                     errorMessage += "กรุณาแนบหลักฐานจัดส่ง";
