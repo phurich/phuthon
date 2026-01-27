@@ -78,6 +78,7 @@
         <input type="hidden" id="foundPhoto" name="foundPhoto" value="false">
         <input type="hidden" id="foundBulk" name="foundBulk" value="false">
         <input type="hidden" id="foundDiscount" name="foundDiscount" value="false">
+        <input type="hidden" id="foundEgg" name="foundEgg" value="false">
         <input type="hidden" id="imageName" name="imageName" value="">
         <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <canvas id="canvas" style="display:none;"></canvas>
@@ -105,6 +106,7 @@
                 document.getElementById("foundPhoto").value = params.photo;
                 document.getElementById("foundBulk").value = params.bulk;
                 document.getElementById("foundDiscount").value = params.discount;
+                document.getElementById("foundEgg").value = params.egg;
                 document.getElementById('completeOrder').action = currentActionUrl;
                 //document.getElementById('completeOrder').action = testActionUrl;
                 getLocation();
@@ -209,7 +211,7 @@
         }
 
         function goToUrl() {
-            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value + "&photo=" + document.getElementById("foundPhoto").value + "&bulk=" + document.getElementById("foundBulk").value + "&discount=" + document.getElementById("foundDiscount").value;
+            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value + "&photo=" + document.getElementById("foundPhoto").value + "&bulk=" + document.getElementById("foundBulk").value + "&discount=" + document.getElementById("foundDiscount").value + "&egg=" + document.getElementById("foundEgg").value;
             var url = "https://liff.line.me/1656261439-JzOM5yZ6?" + taskParam;
             window.location.href = url;
         }

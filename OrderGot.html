@@ -59,6 +59,7 @@
         <input type="hidden" id="foundPhoto" name="foundPhoto" value="false">
         <input type="hidden" id="foundBulk" name="foundBulk" value="false">
         <input type="hidden" id="foundDiscount" name="foundDiscount" value="false">
+        <input type="hidden" id="foundEgg" name="foundEgg" value="false">
         <input type="hidden" id="imageName" name="imageName" value="">
         <input type="hidden" id="imageBase64" name="imageBase64" value="">
         <canvas id="canvas" style="display:none;"></canvas>
@@ -85,6 +86,7 @@
                 document.getElementById("foundPhoto").value = params.photo;
                 document.getElementById("foundBulk").value = params.bulk;
                 document.getElementById("foundDiscount").value = params.discount;
+                document.getElementById("foundEgg").value = params.egg;
                 document.getElementById('getOrder').action = currentActionUrl;
                 //document.getElementById('getOrder').action = testActionUrl;
             }
@@ -103,6 +105,7 @@
             const foundPhoto = document.getElementById('foundPhoto').value;
             const foundBulk = document.getElementById('foundBulk').value;
             const foundDiscount = document.getElementById('foundDiscount').value;
+            const foundEgg = document.getElementById('foundEgg').value;
             const fileInput = document.getElementById('fileInput');
 
             // Regular expressions for validation
@@ -168,6 +171,13 @@
                 }
             }
 
+            if (foundEgg === 'true') {
+                const confirmed = await swalShowWarning("🥚 ตรวจพบ ไข่ดาว/ไข่เจียว", "ระวัง ❗ ร้านอาจจะเตรียมให้ไม่ครบถ้วน");
+                if (!confirmed) { // If user clicked 'Cancel'
+                    return false; // Stop validation and prevent form submission
+                }
+            }
+
             return true; // Form is valid
         }
 
@@ -191,7 +201,7 @@
         }
 
         function goToUrl() {
-            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value + "&photo=" + document.getElementById("foundPhoto").value + "&bulk=" + document.getElementById("foundBulk").value + "&discount=" + document.getElementById("foundDiscount").value;
+            var taskParam = "rider=" + document.getElementById("rider").value + "&row=" + document.getElementById("row").value + "&tel=" + document.getElementById("tel").value + "&photo=" + document.getElementById("foundPhoto").value + "&bulk=" + document.getElementById("foundBulk").value + "&discount=" + document.getElementById("foundDiscount").value + "&egg=" + document.getElementById("foundEgg").value;
             var url = "https://liff.line.me/1656261439-bwOVyD2R?" + taskParam;
             window.location.href = url;
         }
