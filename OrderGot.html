@@ -150,8 +150,15 @@
 
             // Handle asynchronous warnings and act on their confirmation
             // Ensure you're comparing to string 'true' if it's from params
+            if (foundEgg === 'true') {
+                const confirmed = await swalShowWarning("🥚 พบไข่ดาว/ไข่เจียว", "ระวัง ❗ ร้านอาจเตรียมให้ไม่ถูกต้อง");
+                if (!confirmed) { // If user clicked 'Cancel'
+                    return false; // Stop validation and prevent form submission
+                }
+            }
+
             if (foundPhoto === 'true') {
-                const confirmed = await swalShowWarning("📸 พบคำร้องขอถ่ายภาพสินค้า", "ระบุค่าบริการถูกต้องแล้ว?");
+                const confirmed = await swalShowWarning("📸 พบคำร้องขอภาพถ่าย", "ระบุค่าบริการถูกต้องแล้ว?");
                 if (!confirmed) { // If user clicked 'Cancel' (value is false)
                     return false; // Stop validation and prevent form submission
                 }
@@ -166,13 +173,6 @@
 
             if (foundDiscount === 'true') {
                 const confirmed = await swalShowWarning("⏬ ร้านอาจมีการให้ส่วนลดแก่ภูธร", "ระบุส่วนลดภูธรถูกต้องแล้ว?");
-                if (!confirmed) { // If user clicked 'Cancel'
-                    return false; // Stop validation and prevent form submission
-                }
-            }
-
-            if (foundEgg === 'true') {
-                const confirmed = await swalShowWarning("🥚 ตรวจพบ ไข่ดาว/ไข่เจียว", "ระวัง ❗ ร้านอาจจะเตรียมให้ไม่ครบถ้วน");
                 if (!confirmed) { // If user clicked 'Cancel'
                     return false; // Stop validation and prevent form submission
                 }
