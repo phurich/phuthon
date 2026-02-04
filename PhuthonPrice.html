@@ -33,7 +33,7 @@
         <img src="https://phurich.github.io/phuthon/library/logo600px.png" style="max-width: 100%;height: auto;" alt="ภูธรเดลิเวอรี่">
     </div>
     <div class="w3-container w3-center">
-        <h3 id = "pricing_button" class="w3-tag w3-padding w3-round-large w3-green" style="text-decoration: underline solid #4CAF50 50%;text-underline-offset: 30px;" onclick="
+        <h3 id="pricing_button" class="w3-tag w3-padding w3-round-large w3-green" style="text-decoration: underline solid #4CAF50 50%;text-underline-offset: 30px;" onclick="
             document.getElementById('condition').style.display = 'none';
             document.getElementById('condition_button').style.textDecoration =  '';
             document.getElementById('unsupported').style.display = 'none';
@@ -41,7 +41,7 @@
             document.getElementById('pricing').style.display = 'block';
             document.getElementById('pricing_button').style.textDecoration = 'underline solid #4CAF50 50%';
             document.getElementById('pricing_button').style.textUnderlineOffset = '22px';">ค่าบริการ</h1>
-        <h3 id = "condition_button" class="w3-tag w3-padding w3-round-large w3-deep-orange" onclick="
+            <h3 id="condition_button" class="w3-tag w3-padding w3-round-large w3-deep-orange" onclick="
             document.getElementById('pricing').style.display = 'none';
             document.getElementById('pricing_button').style.textDecoration =  '';
             document.getElementById('unsupported').style.display = 'none';
@@ -49,7 +49,7 @@
             document.getElementById('condition').style.display = 'block';
             document.getElementById('condition_button').style.textDecoration = 'underline solid #FF5722 50%';
             document.getElementById('condition_button').style.textUnderlineOffset = '22px';">เงื่อนไข</h1>
-        <h3 id = "unsupported_button" class="w3-tag w3-padding w3-round-large w3-red" onclick="
+                <h3 id="unsupported_button" class="w3-tag w3-padding w3-round-large w3-red" onclick="
             document.getElementById('pricing').style.display = 'none';
             document.getElementById('pricing_button').style.textDecoration =  '';
             document.getElementById('condition').style.display = 'none';
@@ -59,6 +59,10 @@
             document.getElementById('unsupported_button').style.textUnderlineOffset = '22px';">ไม่รองรับ</h1>
     </div>
     <div id="pricing" class="w3-row" style="display: block;">
+        <br />
+        <div class="w3-container w3-center">
+            <img src="https://phurich.github.io/phuthon/library/PhuthonFees.jpg" style="max-width: 100%;height: auto;" alt="ค่าบริการภูธรเดลิเวอรี่">
+        </div>
         <div class="w3-container">
             <p>🛵 ไม่เกิน 4 กิโลเมตร</p>
             <div class="w3-panel w3-round-large w3-pale-green">
@@ -96,6 +100,10 @@
     </div>
 
     <div id="condition" class="w3-row" style="display: none;">
+        <br />
+        <div class="w3-container w3-center">
+            <img src="https://phurich.github.io/phuthon/library/PhuthonTerms.jpg" style="max-width: 100%;height: auto;" alt="เงื่อนไขภูธรเดลิเวอรี่">
+        </div>
         <div class="w3-container">
             <p>กรณี 🍜 ร้านอาหารทั่วไป</p>
             <div class="w3-panel w3-round-large w3-khaki">
@@ -139,7 +147,7 @@
 
     <div id="unsupported" class="w3-row" style="display: none;">
         <div class="w3-container">
-            <p>ภูธรเดลิเวอรี่ 🚫 ไม่รองรับ 🚫 งานดังต่อไปนี้</p>
+            <p class="w3-center">ภูธรเดลิเวอรี่ 🚫 ไม่รองรับ 🚫 งานดังต่อไปนี้</p>
             <div class="w3-panel w3-round-large w3-pale-red">
                 <p>🚫 การซื้อของสดทุกชนิด "หลัง 16:00 น." (🐷 เนื้อสด 🥦 ผักสด 🍎 ผลไม้สด 🌷ดอกไม้สด) เว้นแต่ลูกค้าจะติดต่อทางร้านไว้แล้ว</p>
             </div>
