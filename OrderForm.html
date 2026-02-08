@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ภูธรเดลิเวอรี่ - แบบฟอร์มใช้บริการ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+    <style>
+        /* Global & Fonts */
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafc;
+            color: #333;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        /* LINE Profile */
+        #line-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 50px;
+        }
+
+        #line-login-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        #user-profile {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        #user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #27ae60;
+        }
+
+        /* Form Elements */
+        .shop-block {
+            margin-top: 30px;
+            padding: 15px;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.1rem;
+            width: 100%;
+            padding: 8px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* 2 columns by default */
+            gap: 5px;
+        }
+
+        .form-row label {
+            display: flex;
+            flex-direction: column;
+            /* keep label above input */
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin: 0 auto 15px auto;
+            width: fit-content;
+        }
+
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-open {
+            background: #e8f5e9;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status-open .status-dot {
+            background: #27ae60;
+            animation: pulse 2s infinite;
+        }
+
+        .status-closed {
+            background: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+
+        .status-closed .status-dot {
+            background: #d32f2f;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(39, 174, 96, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+            }
+        }
+
+        /* Item Row & Image Upload */
+        .item-group {
+            padding-bottom: 5px;
+        }
+
+        .item-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .btn-upload {
+            font-size: 2rem;
+            background: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 45px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-upload:hover {
+            background: #e9ecef;
+        }
+
+        .remove-item-btn {
+            background: #e74c3c !important;
+            color: white !important;
+            cursor: pointer;
+            width: 40px !important;
+            height: 40px;
+            margin-top: 6px !important;
+            flex-shrink: 0;
+        }
+
+        .item-image-preview {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            padding-left: 2px;
+            /* margin-bottom: 10px; */
+        }
+
+        .thumb-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .thumb-remove {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-box {
+            background: #fff3f3;
+            border: 1px solid #ffcdd2;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .warning {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        /* On small screens, stack into 1 column */
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #ui-datepicker-div {
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                position: fixed !important;
+            }
+
+            .location-input-group {
+                flex-direction: column !important;
+            }
+
+            .location-input-group button {
+                margin-top: 8px;
+            }
+        }
+
+        /* Radio & Checkbox */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .radio-item label {
+            margin-top: 0 !important;
+            /* Removes the large top margin from your global label style */
+            cursor: pointer;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto !important;
+            margin: 0;
+        }
+
+        #delivery-warning {
+            display: none;
+            background: #fff3f3;
+            border: 1px solid #ffcdd2;
+            color: #d32f2f;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 5px solid #d32f2f;
+        }
+
+        #submitBtn {
+            font-size: 1.1rem;
+            margin-top: 30px;
+        }
+
+        /* Make Radio and Checkbox bigger for Mobile */
+        .radio-item input[type="radio"],
+        #delivery-warning input[type="checkbox"] {
+            appearance: none;
+            /* Remove default browser look */
+            -webkit-appearance: none;
+            width: 22px !important;
+            height: 22px !important;
+            /* border: 2px solid #27ae60; */
+            border-radius: 50%;
+            /* Radios are round */
+            margin: 0;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            background: white;
+        }
+
+        /* Specific shape for Checkbox (Square) */
+        #delivery-warning input[type="checkbox"] {
+            border-radius: 4px;
+        }
+
+        /* Checked State for Radios */
+        .radio-item input[type="radio"]:checked::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            background: #27ae60;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Checked State for Checkbox (Add a checkmark) */
+        #delivery-warning input[type="checkbox"]:checked {
+            background: #27ae60;
+        }
+
+        #delivery-warning input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Align labels perfectly with larger icons */
+        .radio-item label,
+        label[for="photo"] {
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="./library/logo600px.png" alt="ภูธรเดลิเวอรี่" style="display:block; margin:0 auto; max-width: 100%; height: auto;">
+
+        <div class="warning-box">
+            <p style="text-align:center; font-weight:bold; color:#d32f2f; margin:0;">🚫 ภูธรเดลิเวอรี่ไม่รองรับบริการดังต่อไปนี้ 🚫</p>
+            <ul class="warning">
+                <li>การรับ/ส่ง จดหมาย พัสดุ เงินสด วัตถุมีค่า และ ผู้โดยสาร</li>
+                <li>การเดินเอกสาร จองคิว จองตั๋ว ติดต่อธนาคาร ติดต่อโรงพยาบาล หรือ ติดต่อราชการ</li>
+                <li>การชำระบิลที่ไม่ใช่ค่าบริการสาธารณูปโภคทั่วไป เช่น การชำระหนี้เงินกู้ ค่างวด ฯ</li>
+            </ul>
+        </div>
+
+        <div id="status-badge" class="status-badge">
+            <span class="status-dot"></span>
+            <span id="status-text">กำลังตรวจสอบสถานะ...</span>
+        </div>
+
+        <div id="line-section">
+            <button type="button" id="line-login-btn" onclick="liff.login()">เข้าสู่ระบบด้วย LINE</button>
+            <div id="user-profile">
+                <img id="user-img" src="" alt="Profile" style="width: 45px; height: 45px; border-radius: 50%; border: 2px solid #27ae60;">
+                <div style="text-align: left;">
+                    <span id="user-name" style="font-weight: 500;"></span><br>
+                    <small style="color: #666; cursor: pointer; text-decoration: underline;" onclick="liff.logout(); location.reload();">ออกจากระบบ</small>
+                </div>
+            </div>
+        </div>
+
+        <form id="deliveryForm">
+            <div class="form-row">
+                <label>วันที่ (พ.ศ.)
+                    <input type="text" id="thaiDate" name="thaiDate" class="datepicker" readonly required>
+                </label>
+                <label>เวลาจัดส่ง
+                    <select id="thaiTime" name="time" required>
+                        <option value="">-- 🕘เลือกเวลาจัดส่ง --</option>
+                        <option value="now">🛵ทันที💨</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                    </select>
+                </label>
+            </div>
+
+            <div id="all-shops-container">
+                <div class="shop-block">
+                    <div class="form-row">
+                        <label>เลือกบริการ
+                            <select name="serviceType[]" class="service-type-select" required>
+                                <option value="purchase">ให้จัดซื้อ/ยังไม่สั่งร้าน</option>
+                                <option value="get">ให้เข้ารับ/สั่งร้านแล้ว</option>
+                                <option value="bill">ให้ชำระบิลสาธารณูปโภค</option>
+                                <option value="delivery">ร้านค้าเรียกเข้ารับงาน</option>
+                            </select>
+                        </label>
+                        <label>ประเภทร้าน
+                            <select name="shopType[]" class="shop-type-select" required>
+                                <option value="restaurant">ร้านอาหาร</option>
+                                <option value="groceries">ร้านขายยา/ร้านขายของ</option>
+                                <option value="market">ตลาดสด</option>
+                                <option value="fleaMarket">โต้รุ่งหรือตลาดนัด</option>
+                                <option value="places">สถานที่อื่น ๆ</option>
+                            </select>
+                        </label>
+                        <label>ชื่อร้านหรือตำแหน่งร้าน
+                            <input type="text" name="shopName[]" required>
+                        </label>
+                        <label>ค่าอาหาร/ค่าสินค้า
+                            <select name="paid[]" required>
+                                <option value="notPaid">🚫ยังไม่จ่ายร้าน</option>
+                                <option value="paid">💵จ่ายร้านแล้ว</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="extra-get-info" style="display:none;">
+                        <label>สั่งร้านผ่านช่องทาง</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="channel_0_phone" name="orderChannel_0" value="โทรศัพท์" checked>
+                                <label for="channel_0_phone">โทรศัพท์</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="channel_0_line" name="orderChannel_0" value="แชทไลน์">
+                                <label for="channel_0_line">แชทไลน์/ร้านอ่านแล้ว</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="channel_0_fb" name="orderChannel_0" value="แชทเฟสบุ๊ค">
+                                <label for="channel_0_fb">แชทเฟสบุ๊ค/ร้านอ่านแล้ว</label>
+                            </div>
+                        </div>
+                        <label>ภูธรเดลิเวอรี่ต้องแจ้งร้านว่าอย่างไร?</label>
+                        <input type="text" name="instruction[]" class="instruction-input" placeholder="มารับออเดอร์ของคุณ ... ที่สั่งมาทางโทรศัพท์">
+                    </div>
+
+                    <label class="item-label">รายการที่สั่ง</label>
+                    <div class="item-list">
+                        <div class="item-group">
+                            <div class="item-row">
+                                <input type="text" name="shopItems[]" class="item-input" placeholder="รายการที่ 1 ชื่อรายการ จำนวน และ หน่วย" required>
+                                <label class="btn-upload" title="แนบรูป (สูงสุด 2 รูป)">📸<input type="file" accept="image/*" multiple onchange="handleItemImages(this)" style="display:none;"></label>
+                            </div>
+                            <div class="item-image-preview"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-item" onclick="addNewItem(this)" style="width: auto; margin-top: 8px; background: #27ae60; color: white; border: none; padding: 5px 15px;">✨เพิ่มรายการ</button>
+                </div>
+            </div>
+
+            <button type="button" id="add-shop-btn" onclick="addNewShop()" style="display:block; margin: 15px auto 0; width: auto; background: #3598DB; color: white;">🏪 เพิ่มร้านค้า (กรณีสั่งหลายร้าน)</button>
+
+            <div id="location-section">
+                <label>พิกัดปัจจุบันของท่าน
+                    <div class="location-input-group" style="display: flex; gap: 8px; align-items: center;">
+                        <input type="text" id="plusCode" name="plusCode" placeholder="เปิด GPS และ กดปุ่ม &quot;ดึงค่าพิกัดปัจจุบัน&quot;" required>
+                        <button type="button" onclick="getLocation()" style="background:#3598DB; color:white; max-width: fit-content;">📍ดึงค่าพิกัดปัจจุบัน🌐</button>
+                    </div>
+                    <small id="geo-status" style="display:block; margin-top:4px; color:#666;"></small>
+                </label>
+
+                <div class="radio-group" id="delivery-radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="here" name="delivery" value="here" checked>
+                        <label for="here">จัดส่งพิกัดข้างต้น</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="other" name="delivery" value="other">
+                        <label for="other">จัดส่งตำแหน่งอื่น</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="delivery-warning">
+                ⚠️ <strong>คำเตือน:</strong> เพื่อป้องกันผู้รับปฎิเสธ ท่านควรแจ้งผู้รับล่วงหน้า
+
+                <label style="margin-top:15px !important;">เบอร์โทรศัพท์ผู้สั่ง
+                    <input type="tel" id="ordererPhone" placeholder="เบอร์โทรศัพท์มือถือเท่านั้น">
+                </label>
+
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="ordererPaid" name="whoPaid" value="ordererPaid">
+                        <label for="ordererPaid">🙋‍♀️ ผู้สั่งจะโอนชำระ</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="receipientPaid" name="whoPaid" value="receipientPaid">
+                        <label for="receipientPaid">💵 เก็บเงินผู้รับปลายทาง</label>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="photo" name="photo" value="photo">
+                    <label for="photo" style="font-weight: normal;">📸 ต้องการภาพถ่ายผู้รับปลายทาง</label>
+                </div>
+            </div>
+            <label>เบอร์โทรศัพท์ผู้รับ <input type="tel" id="receipientPhone" placeholder="เบอร์โทรศัพท์มือถือเท่านั้น" required></label>
+            <label>รายละเอียดสถานที่จัดส่ง <input type="text" id="deliveryPlace" placeholder="ระบุรายละเอียดสถานที่ จุดสังเกตต่าง ๆ" required></label>
+
+            <button type="submit" id="submitBtn">ส่งคำสั่ง</button>
+        </form>
+    </div>
+
+    <script>
+        // --- NEW: LIFF Initialization Logic ---
+        async function initializeLiff() {
+            try {
+                // Replace with your actual LIFF ID
+                await liff.init({ liffId: "YOUR_LIFF_ID_HERE" });
+
+                if (liff.isLoggedIn()) {
+                    const profile = await liff.getProfile();
+                    // 1. Hide the login button since we are logged in
+                    $("#line-login-btn").hide();
+
+                    // 2. Show and populate the profile
+                    $("#user-profile").css("display", "flex");
+                    $("#user-name").text("สวัสดีคุณ " + profile.displayName);
+                    $("#user-img").attr("src", profile.pictureUrl);
+                }
+                // Note: No 'else' needed. If not logged in, button stays visible.
+            } catch (err) {
+                console.error("LIFF initialization failed", err);
+                // If LIFF fails (e.g., no internet or wrong ID), 
+                // the button remains visible as a fallback.
+            }
+        }
+
+        $(function () {
+            // Start LINE Auth
+            initializeLiff();
+
+            let now = new Date();
+            const todayBE = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear() + 543}`;
+            $("#thaiDate").val(todayBE);
+
+            $(".datepicker").datepicker({
+                //Don't remove this calendar UI localization
+                dateFormat: "dd/mm/yy",
+                minDate: 0,
+                maxDate: 7,
+                closeText: 'ปิด',
+                prevText: 'ก่อนหน้า',
+                nextText: 'ถัดไป',
+                currentText: 'วันนี้',
+                monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+                monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+                dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+                dayNamesShort: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
+                dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+                weekHeader: 'Wk',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ' พ.ศ.',
+                onSelect: function (dateText) {
+                    let p = dateText.split('/');
+                    $(this).val(`${p[0]}/${p[1]}/${parseInt(p[2]) + 543}`);
+                    disablePastTimes();
+                },
+                beforeShow: function () {
+                    if (window.innerWidth <= 480) $('<div class="ui-datepicker-open-overlay"></div>').appendTo('body');
+                    setTimeout(fixYear, 1);
+                },
+                onChangeMonthYear: () => setTimeout(fixYear, 1),
+                onClose: () => $(".ui-datepicker-open-overlay").remove()
+            });
+
+            function fixYear() {
+                $(".ui-datepicker-year").each(function () { $(this).text(parseInt($(this).text()) + 543); });
+            }
+
+            checkStoreStatus();
+            disablePastTimes();
+
+            // Global listener for Service Type
+            $(document).on('change', '.service-type-select', function () {
+                updateUIForService(this);
+            });
+
+            // Listener for Order Channel Radio
+            $(document).on('change', '.extra-get-info input[type="radio"]', function () {
+                const channel = $(this).val();
+                $(this).closest('.extra-get-info').find('.instruction-input').attr('placeholder', `มารับออเดอร์ของคุณ ... ที่สั่งมาทาง${channel}`);
+            });
+        });
+
+        // --- HELPER: GET PLACEHOLDER BASED ON SERVICE TYPE ---
+        function getPlaceholderText(serviceType, index) {
+            if (serviceType === 'bill') {
+                return `รายการที่ ${index} ยอดชำระ และ แนบภาพใบแจ้งหนี้ (ถ้ามี)`;
+            } else if (serviceType === 'get') {
+                return `รายการที่ ${index} ข้าวราด 2 กล่อง กับ เครื่องดื่ม 2 แก้ว`;
+            } else {
+                // Default for 'purchase'
+                return `รายการที่ ${index} ชื่อรายการ จำนวน และ หน่วย`;
+            }
+        }
+
+        // --- UI LOGIC ENGINE ---
+        function updateUIForService(selectEl) {
+            const val = $(selectEl).val();
+            const block = $(selectEl).closest('.shop-block');
+            const shopType = block.find('.shop-type-select');
+
+            // 1. Reset Block Defaults
+            block.find('.extra-get-info').hide();
+            block.find('.item-label').text("รายการที่สั่ง").show();
+            block.find('.item-list').show();
+            block.find('.btn-add-item').show();
+            block.find('.item-input').attr('placeholder', "รายการที่ 1 ชื่อรายการ จำนวน และ หน่วย");
+
+            // 2. Reset Global Defaults
+            $('#add-shop-btn, #location-section, #delivery-radio-group').show();
+
+            // 3. Apply Changes Based on Service Type
+            if (val === 'bill') {
+                shopType.val('places'); // Set to 'สถานที่อื่น ๆ'
+                block.find('.item-label').text("รายการใบแจ้งหนี้");
+            } else {
+                shopType.val('restaurant'); // Set to 'ร้านอาหาร'
+            }
+
+            if (val === 'get') {
+                block.find('.extra-get-info').slideDown();
+                block.find('.item-label').text("รายการที่สั่ง (พอสังเขป)");
+            }
+            else if (val === 'delivery') {
+                block.find('.item-label, .item-list, .btn-add-item').hide();
+                $('#add-shop-btn, #location-section, #delivery-radio-group').hide();
+            }
+
+            // 4. Update all item placeholders in this block
+            block.find('.item-input').each(function (index) {
+                $(this).attr('placeholder', getPlaceholderText(val, index + 1));
+            });
+        }
+
+        // --- Your existing Store Status, Geolocation, and Dynamic Form Logic follows ---
+        function checkStoreStatus() {
+            const now = new Date();
+            const hr = now.getHours();
+            const min = now.getMinutes();
+            const badge = document.getElementById("status-badge");
+            const statusText = document.getElementById("status-text");
+            const submitBtn = document.getElementById("submitBtn");
+
+            const isTooEarly = hr < 7;
+            const isTooLate = hr > 19 || (hr === 19 && min >= 45);
+
+            if (isTooEarly || isTooLate) {
+                badge.className = "status-badge status-closed";
+                statusText.textContent = isTooEarly ? "เปิดรับออเดอร์ล่วงหน้า 07:00 น. เป็นต้นไป" : "ปิดรับออเดอร์แล้ว";
+                submitBtn.disabled = true;
+            } else {
+                badge.className = "status-badge status-open";
+                statusText.textContent = "🛵เปิดรับคำสั่งซื้อ: สั่งได้เลย💨";
+                submitBtn.disabled = false;
+            }
+        }
+
+        function disablePastTimes() {
+            const dateStr = $("#thaiDate").val();
+            const timeSelect = document.getElementById("thaiTime");
+            if (!dateStr || !timeSelect) return;
+            const now = new Date();
+            const hr = now.getHours();
+            const min = now.getMinutes();
+            const p = dateStr.split('/');
+            const isToday = (parseInt(p[2]) - 543 === now.getFullYear() && (parseInt(p[1]) - 1) === now.getMonth() && parseInt(p[0]) === now.getDate());
+
+            Array.from(timeSelect.options).forEach(opt => {
+                if (opt.value === "now") {
+                    const riderNotStarted = hr < 9;
+                    const tooLate = hr > 19 || (hr === 19 && min >= 45);
+                    opt.disabled = !isToday || riderNotStarted || tooLate;
+                    return;
+                }
+                if (isToday) {
+                    const [h, m] = opt.value.split(':');
+                    const chosenTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+                    opt.disabled = (chosenTime - now) < (60 * 60 * 1000);
+                } else {
+                    opt.disabled = false;
+                }
+            });
+        }
+
+        async function getLocation() {
+            const status = document.getElementById("geo-status");
+            status.textContent = "กำลังค้นหาพิกัด...";
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                try {
+                    const res = await fetch(`https://plus.codes/api?address=${pos.coords.latitude},${pos.coords.longitude}`);
+                    const data = await res.json();
+                    $("#plusCode").val(data.plus_code.global_code);
+                    status.textContent = "📍 บันทึกพิกัดของท่านแล้ว";
+                    status.style.color = "#27ae60";
+                } catch (e) { status.textContent = "ไม่สามารถแปลงพิกัดได้"; }
+            }, () => {
+                status.textContent = "กรุณาเปิด GPS และอนุญาตการเข้าถึง";
+                status.style.color = "#d32f2f";
+            });
+        }
+
+        document.getElementById("deliveryForm").addEventListener("submit", function (e) {
+            if (!liff.isLoggedIn()) {
+                e.preventDefault();
+                alert("กรุณาเข้าสู่ระบบด้วย LINE ก่อนส่งคำสั่ง");
+                return;
+            }
+            alert("กำลังส่งคำสั่ง...");
+        });
+        // --- NEW: Image Handling Per Item ---
+        function handleItemImages(input) {
+            const group = $(input).closest('.item-group');
+            const previewContainer = group.find('.item-image-preview');
+            const files = input.files;
+
+            // ตรวจสอบจำนวนรูปรวม (รูปเดิมที่มีอยู่ + รูปใหม่)
+            const currentCount = previewContainer.find('.thumb-wrapper').length;
+            if (currentCount + files.length > 2) {
+                alert("แนบรูปได้สูงสุด 2 รูปต่อรายการครับ");
+                input.value = "";
+                return;
+            }
+
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const thumb = $(`
+                        <div class="thumb-wrapper">
+                            <img src="${e.target.result}">
+                            <button type="button" class="thumb-remove" onclick="removeThumb(this)">✕</button>
+                        </div>
+                    `);
+                    previewContainer.append(thumb);
+                }
+                reader.readAsDataURL(file);
+            });
+            input.value = ""; // Reset
+        }
+
+        function removeThumb(btn) {
+            $(btn).closest('.thumb-wrapper').remove();
+        }
+
+        function removeItem(btn) {
+            const block = $(btn).closest('.shop-block');
+            const currentService = block.find('.service-type-select').val();
+            $(btn).closest('.item-group').remove();
+
+            // Re-index all placeholders after removal (FIXED)
+            block.find('.item-input').each(function (i) {
+                $(this).attr('placeholder', getPlaceholderText(currentService, i + 1));
+            });
+        }
+
+        // --- DYNAMIC CONTENT ---
+        let shopCount = 1;
+        function addNewShop() {
+            const id = shopCount++;
+            const newShop = $(`
+                <div class="shop-block">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>🏪 ร้านค้าเพิ่มเติม</strong>
+                        <button type="button" class="remove-item-btn" onclick="$(this).closest('.shop-block').remove()">✕</button>
+                    </div>
+                    <div class="form-row">
+                        <label>เลือกบริการ
+                            <select name="serviceType[]" class="service-type-select" required>
+                                <option value="purchase">ให้จัดซื้อ/ยังไม่สั่งร้าน</option>
+                                <option value="get">ให้เข้ารับ/สั่งร้านแล้ว</option>
+                                <option value="bill">ให้ชำระบิลสาธารณูปโภค</option>
+                                <option value="delivery">ร้านค้าเรียกเข้ารับงาน</option>
+                            </select>
+                        </label>
+                        <label>ประเภทร้าน
+                            <select name="shopType[]" class="shop-type-select" required>
+                                <option value="restaurant">ร้านอาหาร</option>
+                                <option value="groceries">ร้านขายยา/ร้านขายของ</option>
+                                <option value="market">ตลาดสด</option>
+                                <option value="fleaMarket">โต้รุ่งหรือตลาดนัด</option>
+                                <option value="places">สถานที่อื่น ๆ</option>
+                            </select>
+                        </label>
+                        <label>ชื่อร้านหรือตำแหน่งร้าน<input type="text" name="shopName[]" required></label>
+                        <label>ค่าอาหาร/ค่าสินค้า
+                            <select name="paid[]" required>
+                                <option value="notPaid">🚫ยังไม่จ่ายร้าน</option>
+                                <option value="paid">💵จ่ายร้านแล้ว</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="extra-get-info" style="display:none;">
+                        <label>สั่งร้านผ่านช่องทาง</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="channel_${id}_phone" name="orderChannel_${id}" value="โทรศัพท์" checked>
+                            <label for="channel_${id}_phone">โทรศัพท์</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="channel_${id}_line" name="orderChannel_${id}" value="แชทไลน์">
+                            <label for="channel_${id}_line">แชทไลน์/ร้านอ่านแล้ว</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="channel_${id}_fb" name="orderChannel_${id}" value="แชทเฟสบุ๊ค">
+                            <label for="channel_${id}_fb">แชทเฟสบุ๊ค/ร้านอ่านแล้ว</label>
+                        </div>
+                    </div>
+                        <label>ภูธรเดลิเวอรี่ต้องแจ้งร้านว่าอย่างไร?</label>
+                        <input type="text" name="instruction[]" class="instruction-input" placeholder="มารับออเดอร์ของคุณ ... ที่สั่งมาทางโทรศัพท์">
+                    </div>
+                    <label class="item-label">รายการที่สั่ง</label>
+                    <div class="item-list">
+                        <div class="item-group"><div class="item-row"><input type="text" name="shopItems[]" class="item-input" placeholder="รายการที่ 1 ชื่อรายการ จำนวน และ หน่วย" required><label class="btn-upload">📸<input type="file" onchange="handleItemImages(this)" style="display:none;"></label></div><div class="item-image-preview"></div></div>
+                    </div>
+                    <button type="button" class="btn-add-item" onclick="addNewItem(this)" style="width: auto; background: #27ae60; color: white;">✨เพิ่มรายการ</button>
+                </div>
+            `);
+            $("#all-shops-container").append(newShop);
+        }
+
+        function addNewItem(btn) {
+            const block = $(btn).closest('.shop-block');
+            const list = block.find('.item-list');
+            const currentService = block.find('.service-type-select').val();
+            const count = list.find('.item-group').length + 1;
+
+            const placeholder = getPlaceholderText(currentService, count);
+
+            const newItem = $(`
+                <div class="item-group">
+                    <div class="item-row">
+                        <input type="text" name="shopItems[]" class="item-input" placeholder="${placeholder}" required>
+                        <label class="btn-upload">📸<input type="file" onchange="handleItemImages(this)" style="display:none;"></label>
+                        <button type="button" class="remove-item-btn" onclick="removeItem(this)">✕</button>
+                    </div>
+                    <div class="item-image-preview"></div>
+                </div>
+            `);
+            list.append(newItem);
+        }
+
+        // Listener for Delivery Radio Buttons
+        $('input[name="delivery"]').on('change', function () {
+            if ($(this).val() === 'other') {
+                // Show warning and clear the input for new address
+                $('#delivery-warning').slideDown();
+            } else {
+                // Hide warning and auto-fill "Current Location"
+                $('#delivery-warning').slideUp();
+            }
+        });
+
+        // THE IMAGE ENGINE: Processes and combines all photos
+        async function processAndCombinePhotos() {
+            const rows = document.querySelectorAll('.item-row');
+            const processedImages = [];
+
+            for (let row of rows) {
+                const itemName = row.querySelector('input[name="shopItems[]"]').value || "ไม่ระบุชื่อ";
+                const fileInput = row.querySelector('input[name="itemPhotos[]"]');
+                const files = fileInput.files;
+
+                for (let file of files) {
+                    const img = await createImageBitmap(file);
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Set standard size for each sub-image (e.g., 800px width)
+                    const scale = 800 / img.width;
+                    canvas.width = 800;
+                    canvas.height = img.height * scale;
+
+                    // Draw Image
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Draw Overlay Text (Item Name)
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+                    ctx.fillRect(0, 0, canvas.width, 50);
+                    ctx.fillStyle = "white";
+                    ctx.font = "bold 30px Kanit";
+                    ctx.fillText(itemName, 20, 35);
+
+                    processedImages.push(canvas);
+                }
+            }
+
+            if (processedImages.length === 0) return null;
+
+            // Combine into Grid (2 per row)
+            const finalCanvas = document.createElement('canvas');
+            const finalCtx = finalCanvas.getContext('2d');
+
+            const imgW = 800;
+            const imgH = 600; // Force uniform height for the grid for neatness
+            const cols = 2;
+            const rowsCount = Math.ceil(processedImages.length / cols);
+
+            finalCanvas.width = imgW * cols;
+            finalCanvas.height = imgH * rowsCount;
+
+            processedImages.forEach((canv, index) => {
+                const col = index % cols;
+                const row = Math.floor(index / cols);
+                finalCtx.drawImage(canv, col * imgW, row * imgH, imgW, imgH);
+            });
+
+            return new Promise(resolve => {
+                finalCanvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.8);
+            });
+        }
+
+        // Modify your existing Submit Logic
+        document.getElementById("deliveryForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            if (!liff.isLoggedIn()) {
+                alert("กรุณาเข้าสู่ระบบด้วย LINE ก่อนส่งคำสั่ง");
+                return;
+            }
+
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "⌛ กำลังประมวลผลรูปภาพ...";
+
+            try {
+                const combinedPhotoBlob = await processAndCombinePhotos();
+
+                // Example: Sending to NTFY
+                // You would use FormData to send the blob
+                let formData = new FormData();
+                if (combinedPhotoBlob) {
+                    formData.append('file', combinedPhotoBlob, 'order_items.jpg');
+                }
+
+                alert("รวมรูปภาพเสร็จสิ้น! (พร้อมส่งข้อมูลไปยัง NTFY)");
+                // Add your fetch(NTFY_URL) logic here
+
+            } catch (err) {
+                console.error(err);
+                alert("เกิดข้อผิดพลาดในการประมวลผลรูป");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "ส่งคำสั่ง";
+            }
+        });
+    </script>
+</body>
+
+</html>
