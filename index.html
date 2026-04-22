@@ -218,7 +218,7 @@
     <div class="justify-content-center">ภาพถ่าย = ["📷", "📸", "ถ่าย"]</div>
     <div class="justify-content-center">ยกลัง = ["📦", "ลัง", "กระสอบ"]</div>
     <div class="justify-content-center">ส่วนลด = ["เพ็ง-หวาย", "ใบตอง"]</div>
-    
+
     <script>
         document.onreadystatechange = () => {
             if (document.readyState === "complete") {
@@ -459,19 +459,80 @@
         document.getElementById('assignRider').addEventListener('submit', handleFormSubmit);
 
         async function handleFormSubmit(event) {
-            event.preventDefault(); // Always prevent the default form submission
-            document.getElementsByName('formSubmit')[0].disabled = true;
+            event.preventDefault();
+            const submitBtn = document.getElementsByName('formSubmit')[0];
+            submitBtn.disabled = true;
 
             if (!validateForm()) {
-                document.getElementsByName('formSubmit')[0].disabled = false;
+                submitBtn.disabled = false;
                 return false;
             }
 
             document.getElementById('dialog-sky').style.display = 'block';
             document.getElementById('dialog-overlay').style.display = 'block';
             document.getElementById("imageName").value = "Admin-" + getChosenRiderName() + createOrderNumber();
-            document.getElementById('assignRider').submit();
+
+            const form = document.getElementById('assignRider');
+            const urlEncodedData = new URLSearchParams(new FormData(form)).toString();
+
+            try {
+                const gasRequest = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: urlEncodedData
+                };
+
+                const gasResponse = await doFetchLocal(form.action, gasRequest);
+
+                if (gasResponse) {
+                    const instructions = await gasResponse.json();
+
+                    // POSSIBILITY 1: An external fetch is required (ntfy.sh)
+                    if (instructions.ntfyURL && instructions.request) {
+                        const ntfyResponse = await doFetchLocal(instructions.ntfyURL, instructions.request);
+                        if (ntfyResponse) {
+                            swalShowSuccess("💹 ส่งงานสำเร็จแล้ว");
+                        } else {
+                            swalShowError("❌ ผิดพลาด:การส่งแจ้งเตือนล้มเหลว");
+                        }
+                    }
+                    // POSSIBILITY 2: GAS returned a simple success (true)
+                    else if (instructions.status === "success") {
+                        swalShowSuccess(instructions.message);
+                    }
+                    // POSSIBILITY 3: GAS returned a simple error (false)
+                    else if (instructions.status === "error") {
+                        swalShowError(instructions.message);
+                    }
+                } else {
+                    swalShowError("❌ ผิดพลาด:gasResponse (Network/Server Error)");
+                }
+            } catch (error) {
+                swalShowError("❌ ผิดพลาด:" + error.message);
+            } finally {
+                document.getElementById('dialog-sky').style.display = 'none';
+                document.getElementById('dialog-overlay').style.display = 'none';
+                submitBtn.disabled = false;
+            }
         }
+
+        async function doFetchLocal(serviceURL, serviceRequest) {
+            try {
+                const response = await fetch(serviceURL, serviceRequest);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+
+                console.log("Fetch successful:", serviceURL);
+                return response; // Return the whole response object
+
+            } catch (error) {
+                console.error("doFetchLocal() failed:", error.message);
+                return null; // Return null so the 'if' checks handle the failure
+            }
+        }
+
     </script>
 </body>
 
