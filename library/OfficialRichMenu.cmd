@@ -1,3 +1,23 @@
+rem steps to add new rider
+rem create Ryu richmenu {"richMenuId":"richmenu-2362f0968823e1542fe980a8db0039a8"}
+curl -v https://api.line.me/v2/bot/richmenu ^
+-H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
+-H "Content-Type: application/json" ^
+-d ^
+"{  \"size\": {    \"width\": 2500,    \"height\": 843  },  \"selected\": false,  \"name\": \"RiderRichMenuV1Ryu\",  \"chatBarText\": \"🔺แสดง|ซ่อน🔻\",  \"areas\": [    {      \"bounds\": {        \"x\": 0,        \"y\": 0,        \"width\": 438,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-OyAvx8ly?page=prices\"      }    },    {      \"bounds\": {        \"x\": 439,        \"y\": 0,        \"width\": 455,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-opZpDmR6\"      }    },    {      \"bounds\": {        \"x\": 895,        \"y\": 0,        \"width\": 405,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-OyAvx8ly?page=withdrawal&rider=Ryu\"      }    },    {      \"bounds\": {        \"x\": 1301,        \"y\": 0,        \"width\": 388,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-OyAvx8ly?page=holidays&rider=Ryu\"      }    },    {      \"bounds\": {        \"x\": 1690,        \"y\": 0,        \"width\": 448,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-OyAvx8ly?page=summary&rider=Ryu\"      }    },    {      \"bounds\": {        \"x\": 2139,        \"y\": 0,        \"width\": 361,        \"height\": 843      },      \"action\": {        \"type\": \"uri\",        \"uri\": \"https://liff.line.me/1656261439-anQoEbKq\"      }    }  ]}"
+
+rem set png to Ryu richmenu //MUST change directory in CMD to png file.
+curl -v -X POST https://api-data.line.me/v2/bot/richmenu/richmenu-2362f0968823e1542fe980a8db0039a8/content ^
+-H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
+-H "Content-Type: image/png" ^
+-T RiderRichMenuV1.png
+
+rem add rich menu to Ryu
+curl -v -X POST https://api.line.me/v2/bot/user/Ubfb4e7d5a65dfdea2e194f202c7310cb/richmenu/richmenu-2362f0968823e1542fe980a8db0039a8 ^
+-H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
+-H "Content-Length: 0"
+
+rem ==================================================
 rem Authorization: Bearer ภูธรเดลิเวอรี่ 1
 -H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
 rem Authorization: Bearer ภูธรเดลิเวอรี่ 2
