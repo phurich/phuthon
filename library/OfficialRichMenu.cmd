@@ -130,6 +130,11 @@ curl -v -X POST https://api.line.me/v2/bot/user/Ue34a533d4c41301e33fabe79c79bae0
 -H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
 -H "Content-Length: 0"
 
+rem Phurich
+curl -v -X POST https://api.line.me/v2/bot/user/U50cf3d26ba28cb6a75ca8a40fba2b2e0/richmenu/richmenu-297b9cf995fc5aa9dca1c7bc4780d7f3 ^
+-H "Authorization: Bearer khGrPjgW9ssv7lMHoJ3oFbbnMs6zLgET/JsCQE9xWKfOfTG998Jyj2oSfo9NwMn7KlFJUGoKvW2k8HGJFpTi3FZkj6h4eKeHw9l4Wzd0pBTLoCaw4cyMhiEvC8McESepHp4Qt7/d2SG8mihBQTbqIQdB04t89/1O/w1cDnyilFU=" ^
+-H "Content-Length: 0"
+
 rem ==================================================
 
 rem Validate RichMenu Json in ภูธรเดลิเวอรี่ 2
